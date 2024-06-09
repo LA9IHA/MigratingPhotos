@@ -2,6 +2,6 @@ This is a collection of scripts for photo album migrations as described under ht
 
 File discriptios as follows:
 
-# AlbumTree.py
+# XportHighStage.py
 
 Read an two input files, Album.xlsx and Pic.xlsx for Albums and Photos metadata.
