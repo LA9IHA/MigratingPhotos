@@ -4,6 +4,7 @@ import openpyxl
 import os
 import shutil
 import hashlib
+import re
 
 from openpyxl.descriptors.base import DateTime
 from openpyxl.reader.excel import load_workbook
@@ -38,7 +39,7 @@ class XportHighStage:
         self.MDerr = 'UFFDA'
         
         self.custom_image_extensions = ['.jpeg', '.png', '.jpg', '.gif']
-        self.custom_substitutions = [('&', 'et'), ('(',''), (')',''), (' !', ''), ("'", ' '), (' ', '_')]
+        self.custom_substitutions = [('&', 'et'), ('(',''), (')',''), (' !', ''), ("'", ' '), (' ', '_'), (',', '_')]
         self.custom_video_mime_types = ['media', 'video']
         
         albumfile = self.subdir + 'Album.xlsx'
@@ -139,7 +140,7 @@ class XportHighStage:
         c = self.cpParentDoc+1
         bi = self.cpBareItem+1
         fn = self.cpFileName+1
-        ds = self.caDescription+1
+        # ds = self.caDescription+1
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
             n+=1
             parent = self.wp.cell(row=n, column=c).value
@@ -181,6 +182,8 @@ class XportHighStage:
         name = self.norskeBokstaver(name)
         for a,b in self.custom_substitutions:
             name = name.replace(a,b)
+        name = re.sub(r'[^a-zA-Z0-9]', '_', name)
+        
         #name = name.decode('iso-8859-1')
         return name
 
