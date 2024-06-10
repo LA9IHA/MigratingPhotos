@@ -82,6 +82,7 @@ class XportHighStage:
     def testFile(self, p):
         dp = 0
         smallFiles = 0
+        goodSuffixes = 0
         fun = lambda x : os.path.isfile(os.path.join(p,x))
         files_list = filter(fun, os.listdir(p))
         
@@ -97,10 +98,12 @@ class XportHighStage:
             else:
                 if s < 1500:
                     smallFiles+=1
-        return (dp!=1 & smallFiles>0)
-            
-            
-
+                    
+        suffix = tail(p)
+        if suffix in self.custom_image_extensions:
+            goodSuffixes += 1
+                    
+        return (dp!=1 & smallFiles>0 & goodSuffixes>0)
 
 homedir = "/Volumes/home/Oppgaver/hstransfer/" 
 treedir = homedir + "tree/"
