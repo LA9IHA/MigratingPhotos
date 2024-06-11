@@ -56,7 +56,8 @@ class CheckPics:
         self.cpAlbumFile = 16
         self.cpSeq = 17  # Q Sequence
         self.cpFileError = 18 # R - Error message
-        self.cpLastPic = 19
+        self.caPiwigoId = 19
+        self.cpLastPic = 12
         
         self.checkPics()
         self.pic_wb.save(self.subdir + 'Pic1.xlsx')

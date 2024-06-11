@@ -58,7 +58,8 @@ class addSeqs:
         self.caBareItem = 10
         self.caSeq = 11
         self.caMD5 = 12
-        self.caLastAlbum = 13
+        self.caPiwigoId = 13
+        self.caLastAlbum = 14
         
         # Columns used in Pic.xlsx
         self.cp = 0 # A = ID
@@ -80,7 +81,8 @@ class addSeqs:
         self.cpAlbumFile = 16
         self.cpSeq = 17  # Q Sequence
         self.cpFileError = 18 # R - Error message
-        self.cpLastPic = 19
+        self.caPiwigoId = 19
+        self.cpLastPic = 12
 
         # Columns used in References.xlsx
         self.rpParent = 4 # E
