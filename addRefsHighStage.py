@@ -9,15 +9,20 @@ from openpyxl.descriptors.base import DateTime
 from openpyxl.reader.excel import load_workbook
 from os import listdir
 
+from colsHighStage import colsHighStage
+
 # Purpose: Prepare HighStage album with photos for  igration to Piwigo
 # Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
 # Licence: GNU 2.0
 # Author: Ottar Kvindesland, 2024
 # Reference: https://piwigo.miraheze.org/wiki/HighstageExport
 
-class addSeqs:
+class addSeqs(colsHighStage):
 
     def __init__(self, h, t, s):
+        
+        super().__init__()
+        
         self.homedir = h
         self.treedir = t
         self.subdir = s
@@ -43,57 +48,9 @@ class addSeqs:
         referencesfile = self.subdir + 'References.xlsx'
         self.references_wb = load_workbook(filename=referencesfile)
         self.wr = self.references_wb.worksheets[0]
-
-        # Columns used in Album.xlsx
-        self.ca = 0 # A = Id
-        self.caItem = 1 # B = Item
-        self.caDescription = 2 # C = Description
-        self.caWorkspace = 3 # D = Workspace, i.e. access group
-        self.caEventTime = 4 # etc....
-        self.caEditBy = 5
-        self.caNote = 6
-        self.caInitdate = 7
-        self.caParentDoc = 8
-        self.caFileName = 9
-        self.caBareItem = 10
-        self.caSeq = 11
-        self.caMD5 = 12
-        self.caPiwigoId = 13
-        self.caLastAlbum = 14
-        
-        # Columns used in Pic.xlsx
-        self.cp = 0 # A = ID
-        self.cpItem = 1 # B = Item
-        self.cpDescription = 2 # etc ...
-        self.cpWorkspace = 3
-        self.cpEventTime = 4
-        self.cpEditBy = 5
-        self.cpNote = 6
-        self.cpAlias = 7
-        self.cpNote2 = 8 # History
-        self.cpDate2 = 9  # First time storage
-        self.cpDate3 = 10
-        self.cpExif = 11
-        self.cpInitdate = 12 # Date taken
-        self.cpParentDoc = 13
-        self.cpFileName = 14
-        self.cpBareItem = 15
-        self.cpAlbumFile = 16
-        self.cpSeq = 17  # Q Sequence
-        self.cpFileError = 18 # R - Error message
-        self.caPiwigoId = 19
-        self.cpLastPic = 12
-
-        # Columns used in References.xlsx
-        self.rpParent = 4 # E
-        self.rpChild = 6 # G
-        self.rpSeq = 9 # J
-        self.rpLastCol = 10 # K
-        
+                
         self.refPics()
         self.refAlbums()
-        self.album_wb.save(self.subdir + 'Album1.xlsx')
-        self.pic_wb.save(self.subdir + 'Pic1.xlsx')
         
     def refPics(self):
         n = 0
@@ -101,46 +58,72 @@ class addSeqs:
         bi = self.cpBareItem+1
         fn = self.cpFileName+1
         err = self.cpFileError+1
+        sec = 0
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
             n+=1
             parent = self.wp.cell(row=n, column=c).value
             bareItem = self.wp.cell(row=n, column=bi).value
 
             seq = self.getSeq(parent, bareItem)
-            
-            if (sec > 0):            
-                self.wp.cell(row=n, column=self.cpSeq).value = seq
+            if (seq > 0):
+                self.wp.cell(row=n, column=self.cpSeq+1).value = seq
                 
+            if (n % 100 == 0):
+                print (n, ' pictures done')
+        
+        i = 1
+        for col in self.colsPic:
+            self.wp.cell(row=1, column=i).value = col
+            i = i + 1
+            
+        self.pic_wb.save(self.subdir + 'Pic1.xlsx')
+        
     def refAlbums(self):
         n = 0
         c = self.caParentDoc+1
         bi = self.caBareItem+1
-        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.cpLastAlbum, values_only=False):
+        sec = 0
+        
+        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=False):
             n+=1
             parent = self.wa.cell(row=n, column=c).value
             bareItem = self.wa.cell(row=n, column=bi).value
-
-            seq = self.getSeq(parent, bareItem)
             
-            if (sec > 0):            
-                self.wp.cell(row=n, column=self.caSeq).value = seq
+            seq = self.getSeq(parent, bareItem)
+            if (seq > 0):
+                self.wa.cell(row=n, column=self.caSeq+1).value = seq
+
+            if (n % 100 == 0):
+                print (n, ' albums done')
                 
+        i = 1
+        for col in self.colsAlbum:
+            self.wa.cell(row=1, column=i).value = col
+            i = i + 1
+            
+        self.album_wb.save(self.subdir + 'Album1.xlsx')
+
     def getSeq(self, p, c):
+        
+        p = p.split('-')[0]
+        c = c.split('-')[0]
+        
         n = 0
         cp = self.rpParent+1
         cc = self.rpChild+1
         cs = self.rpSeq+1
-        r = 0
+        hits = 0
+        s = 0
+        
         for ref in self.wr.iter_rows(min_row=1, max_row=self.wr.max_row, min_col=1, max_col=self.rpLastCol, values_only=False):
             n+=1
-            parent = self.wp.cell(row=n, column=cp).value
-            child = self.wp.cell(row=n, column=cc).value
-            ref = self.wp.cell(row=n, column=cr).value
+            parent = self.wr.cell(row=n, column=cp).value.split('-')[0]
+            child = self.wr.cell(row=n, column=cc).value.split('-')[0]
             
             if (p == parent and c == child):
-                r = ref
-                
-        return r
+                hits = hits + 1
+                s = int(self.wr.cell(row=n, column=cs).value)
+        return s
 
 
 homedir = "/Volumes/home/Oppgaver/hstransfer/" 

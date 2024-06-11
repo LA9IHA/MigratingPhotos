@@ -9,15 +9,19 @@ from openpyxl.descriptors.base import DateTime
 from openpyxl.reader.excel import load_workbook
 from os import listdir
 
+from colsHighStage import colsHighStage
+
 # Purpose: Prepare HighStage album with photos for  igration to Piwigo
 # Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
 # Licence: GNU 2.0
 # Author: Ottar Kvindesland, 2024
 # Reference: https://piwigo.miraheze.org/wiki/HighstageExport
 
-class getId:
+class getId(colsHighStage):
 
     def __init__(self, h, t, s):
+        super().__init__()
+        
         self.homedir = h
         self.treedir = t
         self.subdir = s

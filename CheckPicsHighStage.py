@@ -9,15 +9,19 @@ from openpyxl.descriptors.base import DateTime
 from openpyxl.reader.excel import load_workbook
 from os import listdir
 
+from colsHighStage import colsHighStage
+
 # Purpose: Prepare HighStage album with photos for  igration to Piwigo
 # Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
 # Licence: GNU 2.0
 # Author: Ottar Kvindesland, 2024
 # Reference: https://piwigo.miraheze.org/wiki/HighstageExport
 
-class CheckPics:
+class CheckPics(colsHighStage):
 
     def __init__(self, h, t, s):
+        super().__init__()
+        
         self.homedir = h
         self.treedir = t
         self.subdir = s
@@ -35,30 +39,7 @@ class CheckPics:
         picfile = self.subdir + 'Pic.xlsx'
         self.pic_wb = load_workbook(filename=picfile)
         self.wp = self.pic_wb.worksheets[0]
-        
-        # Columns used in Pic.xlsx
-        self.cp = 0 # A = ID
-        self.cpItem = 1 # B = Item
-        self.cpDescription = 2 # etc ...
-        self.cpWorkspace = 3
-        self.cpEventTime = 4
-        self.cpEditBy = 5
-        self.cpNote = 6
-        self.cpAlias = 7
-        self.cpNote2 = 8 # History
-        self.cpDate2 = 9  # First time storage
-        self.cpDate3 = 10
-        self.cpExif = 11
-        self.cpInitdate = 12 # Date taken
-        self.cpParentDoc = 13
-        self.cpFileName = 14
-        self.cpBareItem = 15
-        self.cpAlbumFile = 16
-        self.cpSeq = 17  # Q Sequence
-        self.cpFileError = 18 # R - Error message
-        self.caPiwigoId = 19
-        self.cpLastPic = 12
-        
+               
         self.checkPics()
         self.pic_wb.save(self.subdir + 'Pic1.xlsx')
         

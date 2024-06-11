@@ -9,15 +9,20 @@ import re
 from openpyxl.descriptors.base import DateTime
 from openpyxl.reader.excel import load_workbook
 
+from colsHighStage import colsHighStage
+
 # Purpose: Prepare HighStage album with photos for  igration to Piwigo
 # Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
 # Licence: GNU 2.0
 # Author: Ottar Kvindesland, 2024
 # Reference: https://piwigo.miraheze.org/wiki/HighstageExport
 
-class XportHighStage:
+class XportHighStage(colsHighStage):
 
     def __init__(self, h, t, s):
+        
+        super().__init__()
+
         self.homedir = h
         self.treedir = t
         self.subdir = s
@@ -145,9 +150,11 @@ class XportHighStage:
         c = self.cpParentDoc+1
         bi = self.cpBareItem+1
         fn = self.cpFileName+1
+        dst = self.cpDest+1
         # ds = self.caDescription+1
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
             n+=1
+            dest = ''
             parent = self.wp.cell(row=n, column=c).value
             bareItem = self.wp.cell(row=n, column=bi).value
             fileName = self.wp.cell(row=n, column=fn).value
@@ -159,7 +166,10 @@ class XportHighStage:
                 md = hashlib.md5(open(fthumb,'rb').read()).hexdigest()
                 if md == m:
                     self.wp.cell(row=n, column=self.cpAlbumFile).value = 'AlbumImage'
-                self.copyFiles(r, ffull, fileName)
+                dest = self.copyFiles(r, ffull, fileName)
+                self.wp.cell(row=n, column=dst).value = dest
+                print (dst, ' - DEST: ', dest)
+                
         print(children, 'bilder i', r[self.caItem], '-', r[self.caDescription])
 
     def copyFiles(self, row, origFile, fileName):
@@ -170,6 +180,8 @@ class XportHighStage:
                 subtreepath = subtreepath + '/'
         dest = self.cleanPathName(subtreepath + fileName)
         shutil.copy(origFile, dest)
+        
+        return dest
 
     def norskeBokstaver(self, name):
         
@@ -194,7 +206,7 @@ class XportHighStage:
 
 
 homedir = "/Volumes/home/Oppgaver/hstransfer/" 
-treedir = homedir + "tree/"
+treedir = homedir + "tree3/"
 subdir = homedir + "source/"
     
 a = XportHighStage(homedir, treedir, subdir)
