@@ -42,10 +42,14 @@ class XportHighStage:
         self.custom_substitutions = [('&', 'et'), ('(',''), (')',''), (' !', ''), ("'", ' '), (' ', '_'), (',', '_')]
         self.custom_video_mime_types = ['media', 'video']
         
+        picfile = self.subdir + 'Pic.xlsx'
+        self.pic_wb = load_workbook(filename=picfile)
+        self.wp = self.pic_wb.worksheets[0]
+        
         albumfile = self.subdir + 'Album.xlsx'
         self.album_wb = load_workbook(filename=albumfile)
         self.wa = self.album_wb.worksheets[0]
-        
+
         # Columns used in Album.xlsx
         self.ca = 0 # A = Id
         self.caItem = 1 # B = Item
@@ -58,12 +62,9 @@ class XportHighStage:
         self.caParentDoc = 8
         self.caFileName = 9
         self.caBareItem = 10
-        self.caLastAlbum = 11
+        self.caSeq = 11
         self.caMD5 = 12
-        
-        picfile = self.subdir + 'Pic.xlsx'
-        self.pic_wb = load_workbook(filename=picfile)
-        self.wp = self.pic_wb.worksheets[0]
+        self.caLastAlbum = 13
         
         # Columns used in Pic.xlsx
         self.cp = 0 # A = ID
@@ -82,8 +83,10 @@ class XportHighStage:
         self.cpParentDoc = 13
         self.cpFileName = 14
         self.cpBareItem = 15
-        self.cpLastPic = 16
-        self.cpAlbumFile = 17
+        self.cpAlbumFile = 16
+        self.cpSeq = 17  # Q Sequence
+        self.cpFileError = 18 # R - Error message
+        self.cpLastPic = 19
         
         self.makeTopAlbums(self.wa)
         self.album_wb.save(self.subdir + 'Album1.xlsx')

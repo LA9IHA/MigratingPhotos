@@ -56,9 +56,9 @@ class addSeqs:
         self.caParentDoc = 8
         self.caFileName = 9
         self.caBareItem = 10
-        self.caLastAlbum = 11
-        self.caSeq = 12
-        self.caMD5 = 13
+        self.caSeq = 11
+        self.caMD5 = 12
+        self.caLastAlbum = 13
         
         # Columns used in Pic.xlsx
         self.cp = 0 # A = ID
@@ -77,17 +77,16 @@ class addSeqs:
         self.cpParentDoc = 13
         self.cpFileName = 14
         self.cpBareItem = 15
-        self.cpLastPic = 16
-        self.cpAlbumFile = 17
-        self.cpSeq = 18  # R Sequence
-        self.cpFileError = 19 # S - Error message
+        self.cpAlbumFile = 16
+        self.cpSeq = 17  # Q Sequence
+        self.cpFileError = 18 # R - Error message
+        self.cpLastPic = 19
 
         # Columns used in References.xlsx
         self.rpParent = 4 # E
         self.rpChild = 6 # G
         self.rpSeq = 9 # J
         self.rpLastCol = 10 # K
-
         
         self.refPics()
         self.refAlbums()

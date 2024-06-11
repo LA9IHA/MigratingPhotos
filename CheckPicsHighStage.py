@@ -53,9 +53,10 @@ class CheckPics:
         self.cpParentDoc = 13
         self.cpFileName = 14
         self.cpBareItem = 15
-        self.cpLastPic = 16
-        self.cpAlbumFile = 17
+        self.cpAlbumFile = 16
+        self.cpSeq = 17  # Q Sequence
         self.cpFileError = 18 # R - Error message
+        self.cpLastPic = 19
         
         self.checkPics()
         self.pic_wb.save(self.subdir + 'Pic1.xlsx')
