@@ -1,3 +1,5 @@
+# Content of the repository
+
 This is a collection of scripts for photo album migrations as described under https://piwigo.miraheze.org/wiki/Main_Page
 
 The script are tailored for their sources. In this repository, there are two example sources:
