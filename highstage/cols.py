@@ -8,6 +8,30 @@ class colsHighStage:
 
     def __init__(self):
 
+        self.homedir = "/Volumes/home/Oppgaver/transfer/"
+        self.treedir = self.homedir + "tree3/"
+        self.subdir = self.homedir + "source/"
+        
+        self.fInputAlbum = 'Album.xlsx'
+        self.fOutputAlbum = 'Album1.xlsx'
+        
+        self.fInputPic = 'Pic.xlsx'
+        self.fOutputPic = 'Pic1.xlsx'
+        
+        # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
+        # parent album names with ZZZ and name topParent ZZZ.
+        
+        #self.topParent = 'SPC1064-1A'
+        self.topParent = 'ALBUM1732-1A'
+        
+        self.path = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
+        self.path[0] = self.treedir
+        self.MDerr = 'UFFDA'
+        
+        self.custom_image_extensions = ['.jpeg', '.png', '.jpg', '.gif']
+        self.custom_substitutions = [('&', 'et'), ('(',''), (')',''), (' !', ''), ("'", ' '), (' ', '_'), (',', '_')]
+        self.custom_video_mime_types = ['media', 'video']
+        
         # Columns used in Album.xlsx
         self.ca = 0 # A = Id
         self.caItem = 1 # B = Item

@@ -22,26 +22,14 @@ class CheckPics(colsHighStage):
     def __init__(self, h, t, s):
         super().__init__()
         
-        self.homedir = h
-        self.treedir = t
-        self.subdir = s
         self.path_depth = 0
         
-        self.creationDate = datetime.datetime(1980, 1, 1, 1, 0)
-        self.path = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
-        self.path[0] = self.treedir
-        self.MDerr = 'UFFDA'
-        
-        self.custom_image_extensions = ['.jpeg', '.png', '.jpg', '.gif']
-        self.custom_substitutions = [('&', 'et'), ('(',''), (')',''), (' !', ''), ("'", ' '), (' ', '_')]
-        self.custom_video_mime_types = ['media', 'video']
-        
-        picfile = self.subdir + 'Pic.xlsx'
+        picfile = self.subdir + self.fInputPic
         self.pic_wb = load_workbook(filename=picfile)
         self.wp = self.pic_wb.worksheets[0]
-               
+        
         self.checkPics()
-        self.pic_wb.save(self.subdir + 'Pic1.xlsx')
+        self.pic_wb.save(self.subdir + self.fOutputPic)
         
     def checkPics(self):
         n = 0
@@ -85,9 +73,5 @@ class CheckPics(colsHighStage):
             
         #print('GS: ', goodSuffixes)
         return (( dp == 1) and (smallFiles == 0)  and (goodSuffixes == 1) )
-
-homedir = "/Volumes/home/Oppgaver/hstransfer/" 
-treedir = homedir + "tree/"
-subdir = homedir + "source/"
-    
-a = CheckPics(homedir, treedir, subdir)
+  
+a = CheckPics()
