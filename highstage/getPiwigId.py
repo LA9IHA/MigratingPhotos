@@ -26,6 +26,10 @@ class getId(colsHighStage):
         self.pwg_wb = load_workbook(filename=pwgfile)
         self.wpwg = self.pwg_wb.worksheets[0]
         
+        pwgafile = self.subdir + self.PiwigoAlbum
+        self.pwa_wb = load_workbook(filename=pwgafile)
+        self.wpwa = self.pwa_wb.worksheets[0]
+        
         picfile = self.subdir + self.fInputPic
         self.pic_wb = load_workbook(filename=picfile)
         self.wp = self.pic_wb.worksheets[0]
@@ -36,7 +40,8 @@ class getId(colsHighStage):
         
         self.getSourcePicsId()
         self.pic_wb.save(self.subdir + self.fOutputPic)
-    
+        self.pic_wa.save(self.subdir + self.fOutputAlbum)
+        
     def getSourcePicsId(self):
         
         dst = self.cpDest+1
@@ -62,6 +67,32 @@ class getId(colsHighStage):
                 if p_id != '':
                     print ('ERROR: source file used multiple times: ', src)
                 p_id = self.wpwg.cell(row=n, column=pwgid).value
+        return p_id
+
+    def getSourceAlbumId(self):
+        
+        dst = self.cpDest+1
+        pwgid = self.cpPiwigoId+1
+        n = 0
+        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
+            n += 1
+            destpath = self.wa.cell(row=n, column=dst).value
+            if destpath is not None and destpath != '' and n>1:
+                pwgref = self.getPiwigoAlbRef(destpath)
+                self.wa.cell(row=n, column=pwgid).value = pwgref
+
+    def getPiwigoAlbumId(self):
+        
+        dst = self.cpDest+1
+        pwgid = self.cpPiwigoId+1
+        n = 0
+        for album in self.wpwa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
+            n += 1
+            dst = self.wpwa.cell(row=n, column=pwpath).value
+            if dst is not None and dst.endswith(src):
+                if p_id != '':
+                    print ('ERROR: source file used multiple times: ', src)
+                p_id = self.wpwa.cell(row=n, column=pwgid).value
         return p_id
 
 a = getId()

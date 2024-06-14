@@ -21,6 +21,7 @@ class colsHighStage:
         self.fOutputPic = 'Pic1.xlsx'     # When tested, this should be the same as Pic.xlsx
         
         self.PiwigoPic = 'photos.xlsx'
+        self.PiwigoAlbum = 'categories.xlsx'
         
         # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
@@ -114,4 +115,32 @@ class colsHighStage:
         self.pplongitude = 22            # W
         self.pplastmodified = 23         # X
         self.pplastcol = 24              # Y
+        
+        # Coloumns from categories.xlsx
+        self.paId       
+                 # A
+        self.paname        
+              # B
+        self.paid_uppercat               # C 
+        self.pacomment      
+             # D
+        self.padir       
+                # E
+        self.parank       
+               # F
+        self.paExample      
+             # G
+        self.parepresentative_picture_id
+ # H
+        self.pauppercats  
+               # I
+        self.pacommentable             
+  # J
+        self.paglobal_rank      
+         # K
+        self.paimage_order             
+  # L
+        self.papermalink     
+            # M
+        self.palastmodified              # N
 
