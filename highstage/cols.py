@@ -21,7 +21,6 @@ class colsHighStage:
         self.fOutputPic = 'Pic1.xlsx'     # When tested, this should be the same as Pic.xlsx
         
         self.PiwigoPic = 'photos.xlsx'
-        self.PiwigoAlbum = 'album.xlsx'
         
         # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
@@ -53,7 +52,7 @@ class colsHighStage:
         self.caSeq = 11        # L
         self.caMD5 = 12        # M
         self.caPiwigoId = 13   # N
-        self.caLastAlbum = 14  # O
+        self.caLastAlbum = 19  # O
         
         self.colsAlbum = ['Line no', 'Item', 'Description', 'Workspace', 'EventTime', 'EditBy', 'Note', 'Initdate', 'ParentDoc', 'FileName', 'BareItem', 'Seq', 'MD5', 'PiwigoId', 'LastAlbum']
                 
@@ -79,7 +78,7 @@ class colsHighStage:
         self.cpFileError = 18  # S = Error message
         self.cpDest = 19       # T
         self.cpPiwigoId = 20   # U
-        self.cpLastPic = 21    # V
+        self.cpLastPic = 24    # V
 
         self.colsPic = ['Line no.', 'Item', 'Description', 'Workspace', 'EventTime', 'EditBy', 'Note', 'Alias', 'Note2', 'Date2', 'Date3', 'Exif', 'Initdate', 'ParentDoc', 'FileName', 'BareItem', 'AlbumFile', 'Seq', 'FileError', 'Dest', 'PiwigoId', 'LastPic']
 
@@ -88,3 +87,31 @@ class colsHighStage:
         self.rpChild = 6 # G
         self.rpSeq = 9 # J
         self.rpLastCol = 10 # K
+        
+        # Columns used in photos.xlsx
+        self.ppid =  0                   # A
+        self.ppfile = 1                  # B
+        self.ppdate_available = 2        # C 
+        self.ppdate_creation = 3         # D
+        self.ppname = 4                  # E
+        self.ppcomment =  5              # F
+        self.ppauthor = 6                # G
+        self.pphit = 7                   # H
+        self.ppfilesize = 8              # I
+        self.ppwidth = 9                 # J
+        self.ppheight = 10               # K
+        self.ppcoi = 11                  # L
+        self.pprepresentative_ext = 12   # M
+        self.ppdate_metadata_update = 13 # N
+        self.pprating_score = 14         # O
+        self.pppath = 15                 # P
+        self.ppstorage_category_id = 16  # Q
+        self.pplevel = 17                # R
+        self.ppmd5sum = 18               # W
+        self.ppadded_by = 19             # T
+        self.pprotation = 20             # U
+        self.pplatitude = 21             # V
+        self.pplongitude = 22            # W
+        self.pplastmodified = 23         # X
+        self.pplastcol = 24              # Y
+

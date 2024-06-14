@@ -11,7 +11,7 @@ from os import listdir
 
 from colsHighStage import colsHighStage
 
-# Purpose: Prepare HighStage album with photos for  igration to Piwigo
+# Purpose: Prepare HighStage album with photos for Migration to Piwigo
 # Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
 # Licence: GNU 2.0
 # Author: Ottar Kvindesland, 2024
@@ -23,25 +23,13 @@ class addSeqs(colsHighStage):
         
         super().__init__()
         
-        self.homedir = h
-        self.treedir = t
-        self.subdir = s
-        self.path_depth = 0
-        
         self.creationDate = datetime.datetime(1980, 1, 1, 1, 0)
-        self.path = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
-        self.path[0] = self.treedir
-        self.MDerr = 'UFFDA'
         
-        self.custom_image_extensions = ['.jpeg', '.png', '.jpg', '.gif']
-        self.custom_substitutions = [('&', 'et'), ('(',''), (')',''), (' !', ''), ("'", ' '), (' ', '_')]
-        self.custom_video_mime_types = ['media', 'video']
-        
-        picfile = self.subdir + 'Pic.xlsx'
+        picfile = self.subdir + self.fInputPic
         self.pic_wb = load_workbook(filename=picfile)
         self.wp = self.pic_wb.worksheets[0]
         
-        albumfile = self.subdir + 'Album.xlsx'
+        albumfile = self.subdir + self.fInputAlbum
         self.album_wb = load_workbook(filename=albumfile)
         self.wa = self.album_wb.worksheets[0]
         
