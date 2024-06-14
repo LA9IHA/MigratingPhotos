@@ -10,7 +10,7 @@ class colsHighStage:
 
 
         #self.homedir = "/Volumes/home/Oppgaver/transfer/"
-        self.homedir = "/Volumes/T7 Touch/album/transfer/"
+        self.homedir = "/Volumes/T7Touch/album/transfer/"
         self.treedir = self.homedir + "tree4/"
         self.subdir = self.homedir + "source/"
         

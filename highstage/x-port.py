@@ -121,16 +121,18 @@ class xport(colsHighStage):
             dest = ''
             parent = self.wp.cell(row=n, column=c).value
             bareItem = self.wp.cell(row=n, column=bi).value
-            fileName = self.wp.cell(row=n, column=fn).value
+            fileNameRaw = self.wp.cell(row=n, column=fn).value
+            prefix, _, suffix = fileNameRaw.rpartition('.')
+            fileName = self.cleanPathName(prefix) + '.' + self.cleanPathName(suffix)
             if parent == r[self.caItem]:
                 children += 1
                 fpath = self.subdir + 'PHOTOS/' + bareItem + '/' + bareItem + '/'
                 fthumb = fpath + 'doc_pic.jpg'
-                ffull = fpath + fileName
+                fileOrig = fpath + fileNameRaw
                 md = hashlib.md5(open(fthumb,'rb').read()).hexdigest()
                 if md == m:
                     self.wp.cell(row=n, column=self.cpAlbumFile+1).value = 'AlbumImage'
-                dest = self.copyFiles(r, ffull, fileName)
+                dest = self.copyFiles(r, fileOrig, fileName)
                 fileLoc = dest.replace(self.treedir, "")
                 self.wp.cell(row=n, column=self.cpDest+1).value = fileLoc
         print(children, 'bilder i', r[self.caItem], '-', r[self.caDescription])
@@ -141,11 +143,11 @@ class xport(colsHighStage):
             subtreepath = subtreepath + self.path[n]
             if n>0:
                 subtreepath = subtreepath + '/'
-        dest = subtreepath + self.cleanPathName(fileName)        
+        dest = subtreepath + fileName
         try:
             shutil.copy(origFile, dest)
         except Exception as e:
-            print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
+            #print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
             with open(self.subdir + 'x-port.log') as logfile:
                 logfile.write('FAILED COPY ', origFile, ' TO ', dest, ' >>> ERROR MSG: ', e, '\n')
         return dest
