@@ -44,7 +44,7 @@ class xport(colsHighStage):
         picfile = self.subdir + self.fInputPic
         self.pic_wb = load_workbook(filename=picfile)
         self.wp = self.pic_wb.worksheets[0]
-        
+
         albumfile = self.subdir + self.fInputAlbum
         self.album_wb = load_workbook(filename=albumfile)
         self.wa = self.album_wb.worksheets[0]
@@ -55,6 +55,15 @@ class xport(colsHighStage):
         self.pic_wb.save(self.subdir + self.fOutputPic)
         
     def makeTopAlbums (self, sheet):
+        c = 1
+        for col in self.colsPic:
+            self.wp.cell(row=1, column=c).value = col
+            c = c + 1
+        a = 1
+        for col in self.colsAlbum:
+            self.wa.cell(row=1, column=a).value = col
+            a = a + 1
+            
         for row in sheet.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
             if row[self.caParentDoc] == self.topParent:
                 self.createTree(row)
@@ -76,7 +85,7 @@ class xport(colsHighStage):
             rnum = int(r[self.ca]) + 1
             fdir = self.subdir + 'ALBUMS/' + r[self.caBareItem] + '/' + r[self.caBareItem] + '/' + r[self.caFileName]
             md = hashlib.md5(open(fdir,'rb').read()).hexdigest()
-            self.wa.cell(row=rnum, column=self.caMD5).value = md
+            self.wa.cell(row=rnum, column=self.caMD5+1).value = md
         return md
         
     # Create child directories under a parent dirctory
@@ -120,10 +129,10 @@ class xport(colsHighStage):
                 ffull = fpath + fileName
                 md = hashlib.md5(open(fthumb,'rb').read()).hexdigest()
                 if md == m:
-                    self.wp.cell(row=n, column=self.cpAlbumFile).value = 'AlbumImage'
+                    self.wp.cell(row=n, column=self.cpAlbumFile+1).value = 'AlbumImage'
                 dest = self.copyFiles(r, ffull, fileName)
                 fileLoc = dest.replace(self.treedir, "")
-                self.wp.cell(row=n, column=dst).value = fileLoc
+                self.wp.cell(row=n, column=self.cpDest+1).value = fileLoc
         print(children, 'bilder i', r[self.caItem], '-', r[self.caDescription])
 
     def copyFiles(self, row, origFile, fileName):
@@ -136,7 +145,9 @@ class xport(colsHighStage):
         try:
             shutil.copy(origFile, dest)
         except Exception as e:
-            print ('CANNOT COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
+            print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
+            with open(self.subdir + 'x-port.log') as logfile:
+                logfile.write('FAILED COPY ', origFile, ' TO ', dest, ' >>> ERROR MSG: ', e, '\n')
         return dest
 
     def norskeBokstaver(self, name):

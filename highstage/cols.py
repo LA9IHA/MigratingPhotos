@@ -8,21 +8,27 @@ class colsHighStage:
 
     def __init__(self):
 
-        self.homedir = "/Volumes/home/Oppgaver/transfer/"
-        self.treedir = self.homedir + "tree3/"
+
+        #self.homedir = "/Volumes/home/Oppgaver/transfer/"
+        self.homedir = "/Volumes/T7 Touch/album/transfer/"
+        self.treedir = self.homedir + "tree4/"
         self.subdir = self.homedir + "source/"
         
         self.fInputAlbum = 'Album.xlsx'
-        self.fOutputAlbum = 'Album1.xlsx'
+        self.fOutputAlbum = 'Album1.xlsx' # When tested, this should be the same as Album.xlsx
         
         self.fInputPic = 'Pic.xlsx'
-        self.fOutputPic = 'Pic1.xlsx'
+        self.fOutputPic = 'Pic1.xlsx'     # When tested, this should be the same as Pic.xlsx
+        
+        self.PiwigoPic = 'photos.xlsx'
+        self.PiwigoAlbum = 'album.xlsx'
         
         # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
         
         #self.topParent = 'SPC1064-1A'
-        self.topParent = 'ALBUM1732-1A'
+        #self.topParent = 'ALBUM1732-1A'
+        self.topParent = 'ALBUM1148-1A'
         
         self.path = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
         self.path[0] = self.treedir
@@ -33,47 +39,47 @@ class colsHighStage:
         self.custom_video_mime_types = ['media', 'video']
         
         # Columns used in Album.xlsx
-        self.ca = 0 # A = Id
-        self.caItem = 1 # B = Item
+        self.ca = 0            # A = Id
+        self.caItem = 1        # B = Item
         self.caDescription = 2 # C = Description
-        self.caWorkspace = 3 # D = Workspace, i.e. access group
-        self.caEventTime = 4 # etc....
-        self.caEditBy = 5
-        self.caNote = 6
-        self.caInitdate = 7
-        self.caParentDoc = 8
-        self.caFileName = 9
-        self.caBareItem = 10
-        self.caSeq = 11
-        self.caMD5 = 12
-        self.caPiwigoId = 13
-        self.caLastAlbum = 14
+        self.caWorkspace = 3   # D = Workspace, i.e. access group
+        self.caEventTime = 4   # E
+        self.caEditBy = 5      # F
+        self.caNote = 6        # G
+        self.caInitdate = 7    # H
+        self.caParentDoc = 8   # I
+        self.caFileName = 9    # J
+        self.caBareItem = 10   # K
+        self.caSeq = 11        # L
+        self.caMD5 = 12        # M
+        self.caPiwigoId = 13   # N
+        self.caLastAlbum = 14  # O
         
         self.colsAlbum = ['Line no', 'Item', 'Description', 'Workspace', 'EventTime', 'EditBy', 'Note', 'Initdate', 'ParentDoc', 'FileName', 'BareItem', 'Seq', 'MD5', 'PiwigoId', 'LastAlbum']
                 
         # Columns used in Pic.xlsx
-        self.cp = 0 # A = ID
-        self.cpItem = 1 # B = Item
-        self.cpDescription = 2 # etc ...
-        self.cpWorkspace = 3
-        self.cpEventTime = 4
-        self.cpEditBy = 5
-        self.cpNote = 6
-        self.cpAlias = 7
-        self.cpNote2 = 8 # History
-        self.cpDate2 = 9  # First time storage
-        self.cpDate3 = 10
-        self.cpExif = 11
-        self.cpInitdate = 12 # Date taken
-        self.cpParentDoc = 13
-        self.cpFileName = 14
-        self.cpBareItem = 15
-        self.cpAlbumFile = 16
-        self.cpSeq = 17  # Q Sequence
-        self.cpFileError = 18 # R - Error message
-        self.cpDest = 19
-        self.cpPiwigoId = 20
-        self.cpLastPic = 21
+        self.cp = 0            # A = ID
+        self.cpItem = 1        # B = Item
+        self.cpDescription = 2 # C 
+        self.cpWorkspace = 3   # D 
+        self.cpEventTime = 4   # E 
+        self.cpEditBy = 5      # F 
+        self.cpNote = 6        # G 
+        self.cpAlias = 7       # H 
+        self.cpNote2 = 8       # I = History
+        self.cpDate2 = 9       # J = First time storage
+        self.cpDate3 = 10      # K
+        self.cpExif = 11       # L
+        self.cpInitdate = 12   # M = Date taken
+        self.cpParentDoc = 13  # N
+        self.cpFileName = 14   # O
+        self.cpBareItem = 15   # P
+        self.cpAlbumFile = 16  # Q
+        self.cpSeq = 17        # R = Sequence
+        self.cpFileError = 18  # S = Error message
+        self.cpDest = 19       # T
+        self.cpPiwigoId = 20   # U
+        self.cpLastPic = 21    # V
 
         self.colsPic = ['Line no.', 'Item', 'Description', 'Workspace', 'EventTime', 'EditBy', 'Note', 'Alias', 'Note2', 'Date2', 'Date3', 'Exif', 'Initdate', 'ParentDoc', 'FileName', 'BareItem', 'AlbumFile', 'Seq', 'FileError', 'Dest', 'PiwigoId', 'LastPic']
 
@@ -82,6 +88,3 @@ class colsHighStage:
         self.rpChild = 6 # G
         self.rpSeq = 9 # J
         self.rpLastCol = 10 # K
-        
-        self.colsRefs = ['rpParent', 'rpChild', 'rpSeq', 'rpLastCol']
-        
