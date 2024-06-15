@@ -6,16 +6,14 @@ import shutil
 import hashlib
 import re
 
+# See cols.py header for info.
+# (C) 2024: Ottar Kvindesland, Licence: GPL 2.0
+# Purpose: Export from HighStage album to Piwigo Fils structure. Build metadata from items
+
 from openpyxl.descriptors.base import DateTime
 from openpyxl.reader.excel import load_workbook
 
 from cols import colsHighStage
-
-# Purpose: Prepare HighStage album with photos for  igration to Piwigo
-# Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
-# Licence: GNU 2.0
-# Author: Ottar Kvindesland, 2024
-# Reference: https://piwigo.miraheze.org/wiki/HighstageExport
 
 class xport(colsHighStage):
 
@@ -66,7 +64,7 @@ class xport(colsHighStage):
             
         for row in sheet.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
             if row[self.caParentDoc] == self.topParent:
-                self.createTree(row)
+                m = self.createTree(row)
                 
     # Create a directory with sub-directories and photos
     def createTree(self, row):
@@ -77,6 +75,8 @@ class xport(colsHighStage):
         self.createPics(row, md)
         self.createChildren(row, md)
         self.path_depth -= 1
+        
+        return md
         
     # Define an MD5 hash for album to recognize album pictures
     def createAMD5(self, r):
@@ -96,17 +96,27 @@ class xport(colsHighStage):
                 md = self.createAMD5(row)
                 if md == mdParent:
                     albFile = 'Y'
+                    #
+                    # FIX THIS! Need to mark album files of child album
+                    #
+                    self.wa.cell(row=rnum, column=self.caAlbumImg+1).value = 'ALBUM FILE'
                 print ('CHILD ALBUM: ', row[self.caItem], ' - ', albFile)
                 self.createTree(row)
        
         
-    def createDir(self, row):
+    def createDir(self, r):
         subtreepath = ''
         for n in range (self.path_depth + 1):
             subtreepath = subtreepath + self.path[n]
             if n>0:
                 subtreepath = subtreepath + '/'
         os.makedirs(subtreepath)
+        
+        if (r[self.caFileName] != ''):
+            rnum = int(r[self.ca]) + 1
+            if subtreepath.startswith(self.homedir):
+                relPath = subtreepath[len(self.homedir):]
+            self.wa.cell(row=rnum, column=self.caAlbumPath+1).value = relPath
 
     def createPics(self, r, m):
         n = 0
@@ -172,5 +182,12 @@ class xport(colsHighStage):
         
         #name = name.decode('iso-8859-1')
         return name
+    
+    def getAlbumImages(self, p):
+            
+        for row in sheet.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
+            if row[self.caParentDoc] == self.topParent:
+                m = 2
+        
     
 a = xport()

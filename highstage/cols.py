@@ -7,18 +7,23 @@
 class colsHighStage:
 
     def __init__(self):
-
-
+        
+        self.testMode = True # Set to False if it is for a production run
+        
         #self.homedir = "/Volumes/home/Oppgaver/transfer/"
         self.homedir = "/Volumes/T7Touch/album/transfer/"
         self.treedir = self.homedir + "tree4/"
         self.subdir = self.homedir + "source/"
         
         self.fInputAlbum = 'Album.xlsx'
-        self.fOutputAlbum = 'Album1.xlsx' # When tested, this should be the same as Album.xlsx
+        self.fOutputAlbum = self.fInputAlbum
         
         self.fInputPic = 'Pic.xlsx'
-        self.fOutputPic = 'Pic1.xlsx'     # When tested, this should be the same as Pic.xlsx
+        self.fOutputPic = self.fInputPic
+        
+        if self.testMode:
+            self.fOutputAlbum = 'Album1.xlsx' # When tested, this should be the same as Album.xlsx, set self.testMode to False
+            self.fOutputPic = 'Pic1.xlsx'     # When tested, this should be the same as Pic.xlsx, set self.testMode to False
         
         self.fRefList = 'References.xlsx'
         
@@ -125,29 +130,18 @@ class colsHighStage:
         self.pplastcol = 24              # Y
         
         # Coloumns from categories.xlsx
-        self.paId = 0       
-                 # A
-        self.paname = 1        
-              # B
+        self.paId = 0                        # A
+        self.paname = 1                      # B
         self.paid_uppercat = 2               # C 
-        self.pacomment = 3      
-             # D
-        self.padir = 4       
-                # E
-        self.parank = 5      
-                # F
-        self.paExample = 6     
-              # G
+        self.pacomment = 3                   # D
+        self.padir = 4                       # E
+        self.parank = 5                      # F
+        self.paExample = 6                   # G
         self.parepresentative_picture_id = 7 # H
-        self.pauppercats = 8  
-               # I
-        self.pacommentable = 9             
-  # J
-        self.paglobal_rank = 10     
-         # K
-        self.paimage_order = 11            
-  # L
-        self.papermalink = 12    
-            # M
+        self.pauppercats = 8                 # I
+        self.pacommentable = 9               # J
+        self.paglobal_rank = 10              # K
+        self.paimage_order = 11              # L
+        self.papermalink = 12                # M
         self.palastmodified = 13             # N
         self.palastcol = 15                  # P

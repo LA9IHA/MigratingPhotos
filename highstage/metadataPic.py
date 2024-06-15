@@ -31,12 +31,13 @@ class metadataPic(colsHighStage):
         self.album_wb = load_workbook(filename=albumfile)
         self.wa = self.album_wb.worksheets[0]
         
-        with open(self.subdir + self.usersFileName, 'w') as usersFile:
-            usersFile.write('')
-        with open(self.subdir + self.userSqlFileName, 'w') as userSqlFile:
-            userSqlFile.write('')
-        with open(self.subdir + self.sqlFileName, 'w') as sqlFile:
-            sqlFile.write('')
+        if self.testMode:
+            with open(self.subdir + self.usersFileName, 'w') as usersFile:
+                usersFile.write('')
+            with open(self.subdir + self.userSqlFileName, 'w') as userSqlFile:
+                userSqlFile.write('')
+            with open(self.subdir + self.sqlFileName, 'w') as sqlFile:
+                sqlFile.write('')
                 
         self.metaPics()
         #self.refAlbums()
