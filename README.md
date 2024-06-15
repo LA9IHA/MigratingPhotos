@@ -8,3 +8,7 @@ The script are tailored for their sources. In this repository, there are two exa
 - Gallery 1.5, an old gallery system with metadata in a propriatory file format and image files in a file structure.
 
 Further fomments are for the repositories at each subdirecotry here.
+
+## SQL Manipulation scripts
+
+Under the SQL page
