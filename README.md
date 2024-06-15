@@ -11,4 +11,4 @@ Further fomments are for the repositories at each subdirecotry here.
 
 ## SQL Manipulation scripts
 
-Under the SQL page
+Under the albumSQL page, there are scripts to extract data from Piwigo
