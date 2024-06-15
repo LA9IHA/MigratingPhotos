@@ -20,8 +20,14 @@ class colsHighStage:
         self.fInputPic = 'Pic.xlsx'
         self.fOutputPic = 'Pic1.xlsx'     # When tested, this should be the same as Pic.xlsx
         
+        self.fRefList = 'References.xlsx'
+        
         self.PiwigoPic = 'photos.xlsx'
         self.PiwigoAlbum = 'categories.xlsx'
+        
+        self.sqlFileName = 'metadata.sql'
+        self.usersFileName = 'users.txt'
+        self.userSqlFileName = 'users.sql'
         
         # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
@@ -53,10 +59,12 @@ class colsHighStage:
         self.caSeq = 11        # L
         self.caMD5 = 12        # M
         self.caPiwigoId = 13   # N
-        self.caLastAlbum = 19  # O
+        self.caAlbumImg = 14   # O
+        self.caAlbumPath = 15  # P
+        self.caLastAlbum = 19  # T
         
-        self.colsAlbum = ['Line no', 'Item', 'Description', 'Workspace', 'EventTime', 'EditBy', 'Note', 'Initdate', 'ParentDoc', 'FileName', 'BareItem', 'Seq', 'MD5', 'PiwigoId', 'LastAlbum']
-                
+        self.colsAlbum = ['Line no', 'Item', 'Description', 'Workspace', 'EventTime', 'EditBy', 'Note', 'Initdate', 'ParentDoc', 'FileName', 'BareItem', 'Seq', 'MD5', 'PiwigoId', 'AlbumImg', 'AlbumPath', 'LastAlbum']
+        
         # Columns used in Pic.xlsx
         self.cp = 0            # A = ID
         self.cpItem = 1        # B = Item
@@ -117,30 +125,29 @@ class colsHighStage:
         self.pplastcol = 24              # Y
         
         # Coloumns from categories.xlsx
-        self.paId       
+        self.paId = 0       
                  # A
-        self.paname        
+        self.paname = 1        
               # B
-        self.paid_uppercat               # C 
-        self.pacomment      
+        self.paid_uppercat = 2               # C 
+        self.pacomment = 3      
              # D
-        self.padir       
+        self.padir = 4       
                 # E
-        self.parank       
-               # F
-        self.paExample      
-             # G
-        self.parepresentative_picture_id
- # H
-        self.pauppercats  
+        self.parank = 5      
+                # F
+        self.paExample = 6     
+              # G
+        self.parepresentative_picture_id = 7 # H
+        self.pauppercats = 8  
                # I
-        self.pacommentable             
+        self.pacommentable = 9             
   # J
-        self.paglobal_rank      
+        self.paglobal_rank = 10     
          # K
-        self.paimage_order             
+        self.paimage_order = 11            
   # L
-        self.papermalink     
+        self.papermalink = 12    
             # M
-        self.palastmodified              # N
-
+        self.palastmodified = 13             # N
+        self.palastcol = 15                  # P
