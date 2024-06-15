@@ -39,8 +39,10 @@ class getId(colsHighStage):
         self.wa = self.album_wb.worksheets[0]
         
         self.getSourcePicsId()
+        self.getSourceAlbumId()
+        
         self.pic_wb.save(self.subdir + self.fOutputPic)
-        self.pic_wa.save(self.subdir + self.fOutputAlbum)
+        self.album_wb.save(self.subdir + self.fOutputAlbum)
         
     def getSourcePicsId(self):
         
@@ -65,14 +67,14 @@ class getId(colsHighStage):
             dst = self.wpwg.cell(row=n, column=pwpath).value
             if dst is not None and dst.endswith(src):
                 if p_id != '':
-                    print ('ERROR: source file used multiple times: ', src)
+                    print ('ERROR, Pic: source file used multiple times: ', src)
                 p_id = self.wpwg.cell(row=n, column=pwgid).value
         return p_id
 
     def getSourceAlbumId(self):
         
-        dst = self.cpDest+1
-        pwgid = self.cpPiwigoId+1
+        dst = self.caAlbumPath+1
+        pwgid = self.caPiwigoId+1
         n = 0
         for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
             n += 1
@@ -81,18 +83,21 @@ class getId(colsHighStage):
                 pwgref = self.getPiwigoAlbRef(destpath)
                 self.wa.cell(row=n, column=pwgid).value = pwgref
 
-    def getPiwigoAlbumId(self):
+    def getPiwigoAlbRef(self, src):
         
-        dst = self.cpDest+1
-        pwgid = self.cpPiwigoId+1
+        pwpath = self.padir+1
+        pwgid = self.paId+1
         n = 0
-        for album in self.wpwa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
+        p_id = ''
+        if src.endswith('/'):
+            src = src[:-1]
+        for album in self.wpwa.iter_rows(min_row=1, max_row=self.wpwa.max_row, min_col=1, max_col=self.palastcol, values_only=False):
             n += 1
             dst = self.wpwa.cell(row=n, column=pwpath).value
-            if dst is not None and dst.endswith(src):
+            if dst is not None and src.endswith(dst):
                 if p_id != '':
-                    print ('ERROR: source file used multiple times: ', src)
-                p_id = self.wpwa.cell(row=n, column=pwgid).value
+                    print ('ERROR, Album: source file used multiple times: ', src)
+                p_id = str(self.wpwa.cell(row=n, column=pwgid).value)
         return p_id
 
 a = getId()
