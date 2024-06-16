@@ -85,7 +85,6 @@ class metadataPic(colsHighStage):
             if (n % 100 == 0):
                 print (n, ' pictures done')
                 
-        print 
         with open(self.injectdir + self.usersFileName, 'a') as usersFile:
             usersFile.write(users)
         with open(self.injectdir + self.userSqlFileName, 'a') as userSqlFile:
@@ -98,7 +97,7 @@ class metadataPic(colsHighStage):
         sql = ''
         userSql = ''
         users = ''
-        for pic in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=False):
+        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=False):
             n+=1
             albCa = str(self.wa.cell(row=n, column=self.ca+1).value)
             albCaItem = str(self.wa.cell(row=n, column=self.caItem+1).value)
@@ -159,5 +158,64 @@ class metadataPic(colsHighStage):
         
         if os.path.exists(self.injectdir + self.usersFileName):
             os.remove(self.injectdir + self.usersFileName)
-    
+            
+    def getPiwigoFromAlbum(parent):
+        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=False):
+            if album[self.caItem] == parent:
+                return album[self.caPiwigoId]
+
+    def getPicsSeq(self):
+        seqList = []
+        n = 0
+        for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
+            n += 1
+            if (n % 100 == 0):
+                print (n, ' pictures checked for sequences')
+            if pic[self.cpSeq - 1].value is not None and pic[self.cpSeq - 1].value != '':
+                seqList.append([pic[self.cpParentDoc - 1].value, pic[self.cpPiwigoId - 1].value, pic[self.cpSeq - 1].value])
+        unique_parents = set(item[0] for item in seqList)
+        n = 0
+        for parent in unique_parents:
+            n+=1
+            if (n % 100 == 0):
+                print (n, ' picture sequence SQL generated')            
+            parentId = self.getPiwigoFromAlbum(parent)
+            picList = [p for p in seqList if seqList[0] == parent]
+            sorted_picList = sorted(picList, key=lambda x: x[1])
+            s = 1
+            for seqPic in sorted_picList:
+                sql += 'update image_categories set rank = ' + s + ' where image_id = '
+                + secPiv[1] + ' and image_category = '
+                + parentId + ';\n'
+                        
+        with open(self.injectdir + self.sqlFileName, 'a') as sqlFile:
+            sqlFile.write(sql)
+        
+    def getAlbumSeq(self):
+        seqList = []
+        n = 0
+        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=False):
+            n += 1
+            if (n % 100 == 0):
+                print (n, ' albums checked for sequences')
+            if album[self.cpSeq - 1].value is not None and pic[self.cpSeq - 1].value != '':
+                seqList.append([pic[self.cpParentDoc - 1].value, pic[self.cpPiwigoId - 1].value, pic[self.cpSeq - 1].value])
+        unique_parents = set(item[0] for item in seqList)
+        n = 0
+        for parent in unique_parents:
+            n+=1
+            if (n % 100 == 0):
+                print (n, ' picture sequence SQL generated')            
+            parentId = self.getPiwigoFromAlbum(parent)
+            picList = [p for p in seqList if seqList[0] == parent]
+            sorted_picList = sorted(picList, key=lambda x: x[1])
+            s = 1
+            for seqPic in sorted_picList:
+                sql += 'update image_categories set rank = ' + s + ' where image_id = '
+                + secPiv[1] + ' and image_category = '
+                + parentId + ';\n'
+                        
+        with open(self.injectdir + self.sqlFileName, 'a') as sqlFile:
+            sqlFile.write(sql)
+
 a = metadataPic()
