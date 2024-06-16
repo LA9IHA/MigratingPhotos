@@ -32,15 +32,15 @@ class metadataPic(colsHighStage):
         self.wa = self.album_wb.worksheets[0]
         
         if self.testMode:
-            with open(self.subdir + self.usersFileName, 'w') as usersFile:
+            with open(self.injectdir + self.usersFileName, 'w') as usersFile:
                 usersFile.write('')
-            with open(self.subdir + self.userSqlFileName, 'w') as userSqlFile:
+            with open(self.injectdir + self.userSqlFileName, 'w') as userSqlFile:
                 userSqlFile.write('')
-            with open(self.subdir + self.sqlFileName, 'w') as sqlFile:
+            with open(self.injectdir + self.sqlFileName, 'w') as sqlFile:
                 sqlFile.write('')
                 
         self.metaPics()
-        #self.refAlbums()
+        self.metaAlbums()
         
         self.clearUserList()
         
@@ -85,38 +85,59 @@ class metadataPic(colsHighStage):
             if (n % 100 == 0):
                 print (n, ' pictures done')
                 
-        with open(self.subdir + self.usersFileName, 'a') as usersFile:
+        print 
+        with open(self.injectdir + self.usersFileName, 'a') as usersFile:
             usersFile.write(users)
-        with open(self.subdir + self.userSqlFileName, 'a') as userSqlFile:
+        with open(self.injectdir + self.userSqlFileName, 'a') as userSqlFile:
             userSqlFile.write(userSql)
-        with open(self.subdir + self.sqlFileName, 'a') as sqlFile:
+        with open(self.injectdir + self.sqlFileName, 'a') as sqlFile:
             sqlFile.write(sql)
         
-    def refAlbums(self):
+    def metaAlbums(self):
         n = 0
-        c = self.caParentDoc+1
-        bi = self.caBareItem+1
-        sec = 0
-        
-        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=False):
+        sql = ''
+        userSql = ''
+        users = ''
+        for pic in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=False):
             n+=1
-            parent = self.wa.cell(row=n, column=c).value
-            bareItem = self.wa.cell(row=n, column=bi).value
-            
-            if parent is not None and bareItem is not None:
-                seq = self.getSeq(parent, bareItem)
-                if (seq > 0):
-                    self.wa.cell(row=n, column=self.caSeq+1).value = seq
+            albCa = str(self.wa.cell(row=n, column=self.ca+1).value)
+            albCaItem = str(self.wa.cell(row=n, column=self.caItem+1).value)
+            albDescription = str(self.wa.cell(row=n, column=self.caDescription+1).value)
+            albWorkspace = str(self.wa.cell(row=n, column=self.caWorkspace+1).value)
+            albEventTime = str(self.wa.cell(row=n, column=self.caEventTime+1).value)
+            albEditBy = str(self.wa.cell(row=n, column=self.caEditBy+1).value)
+            albNote = str(self.wa.cell(row=n, column=self.caNote+1).value)
+            albInitdate = str(self.wa.cell(row=n, column=self.caInitdate+1).value)
+            albParentDoc = str(self.wa.cell(row=n, column=self.caParentDoc+1).value)
+            albFileName = str(self.wa.cell(row=n, column=self.caFileName+1).value)
+            albBareItem = str(self.wa.cell(row=n, column=self.caBareItem+1).value)
+            albSeq = self.wa.cell(row=n, column=self.caSeq+1).value
+            albMD5 = str(self.wa.cell(row=n, column=self.caMD5+1).value)
+            albPiwigoId = self.wa.cell(row=n, column=self.caPiwigoId+1).value
+            albAlbumImg = str(self.wa.cell(row=n, column=self.caAlbumImg+1).value)
+            albAlbumPath = str(self.wa.cell(row=n, column=self.caAlbumPath+1).value)
 
+            if albPiwigoId is not None:
+                pw = str(albPiwigoId)
+                if pw != '' and n>1:
+                    sql = sql + 'update categories set name = \'' + albDescription + '\''
+                    if albSeq is not None:
+                        sql += ', rank = \'' + albSeq + '\''
+                    sql += ' where id = \'' + pw +  '\';\n'
+                    if albSeq is not None:
+                        sql = sql + 'update image_category set rank = \'' + str(picSeq) + '\' where image_id = \'' + pw + '\';\n'
+                    #userSql = userSql + 'update images set author = \'' + picEditBy + '\' where id = \'' + pw + '\';\n'
+                    #users = users + picEditBy + '\n'
+                    
             if (n % 100 == 0):
                 print (n, ' albums done')
                 
-        i = 1
-        for col in self.colsAlbum:
-            self.wa.cell(row=1, column=i).value = col
-            i = i + 1
-            
-        self.album_wb.save(self.subdir + 'Album1.xlsx')
+        with open(self.injectdir + self.usersFileName, 'a') as usersFile:
+            usersFile.write(users)
+        with open(self.injectdir + self.userSqlFileName, 'a') as userSqlFile:
+            userSqlFile.write(userSql)
+        with open(self.injectdir + self.sqlFileName, 'a') as sqlFile:
+            sqlFile.write(sql)
     
     def toPiwigoDate (self, d):
         
@@ -129,14 +150,14 @@ class metadataPic(colsHighStage):
     def clearUserList(self):
         b = 3
         lines_seen = set()
-        outfile = open(self.subdir + 'unique_' + self.usersFileName, "w")
-        for line in open(self.subdir + self.usersFileName, "r"):
+        outfile = open(self.injectdir + 'unique_' + self.usersFileName, "w")
+        for line in open(self.injectdir + self.usersFileName, "r"):
             if line not in lines_seen:
                 outfile.write(line)
                 lines_seen.add(line)
         outfile.close()
         
-        if os.path.exists(self.subdir + self.usersFileName):
-            os.remove(self.subdir + self.usersFileName)
+        if os.path.exists(self.injectdir + self.usersFileName):
+            os.remove(self.injectdir + self.usersFileName)
     
 a = metadataPic()

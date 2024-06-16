@@ -181,13 +181,6 @@ class xport(colsHighStage):
         name = re.sub(r'[^a-zA-Z0-9]', '_', name)
         
         #name = name.decode('iso-8859-1')
-        return name
-    
-    def getAlbumImages(self, p):
-            
-        for row in sheet.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
-            if row[self.caParentDoc] == self.topParent:
-                m = 2
-        
+        return name        
     
 a = xport()

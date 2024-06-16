@@ -34,9 +34,15 @@ class addSeqs(colsHighStage):
         referencesfile = self.subdir + self.fRefList
         self.references_wb = load_workbook(filename=referencesfile)
         self.wr = self.references_wb.worksheets[0]
-                
+        
+        self.lineCounter = 0
+        
         self.refPics()
+        self.pic_wb.save(self.subdir + self.fOutputPic)
         self.refAlbums()
+        self.getAlbumImages(self.topParent)
+        self.album_wb.save(self.subdir + 'Album1.xlsx')
+
         
     def refPics(self):
         n = 0
@@ -62,9 +68,7 @@ class addSeqs(colsHighStage):
         for col in self.colsPic:
             self.wp.cell(row=1, column=i).value = col
             i = i + 1
-            
-        self.pic_wb.save(self.subdir + self.fOutputPic)
-        
+                    
     def refAlbums(self):
         n = 0
         c = self.caParentDoc+1
@@ -89,8 +93,6 @@ class addSeqs(colsHighStage):
             self.wa.cell(row=1, column=i).value = col
             i = i + 1
             
-        self.album_wb.save(self.subdir + 'Album1.xlsx')
-
     def getSeq(self, p, c):
         
         p = p.split('-')[0]
@@ -112,5 +114,19 @@ class addSeqs(colsHighStage):
                 hits = hits + 1
                 s = int(self.wr.cell(row=n, column=cs).value)
         return s
+
+    def getAlbumImages(self, p):
+        
+        for parent in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
+            if parent[self.caItem] == p:
+                for child in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
+                    if child[self.caParentDoc] == p:
+                        self.lineCounter += 1
+                        if (self.lineCounter % 10 == 0):
+                            print (self.lineCounter, ' albums images defined')
+                        alImg = ''
+                        if parent[self.caMD5] == child[self.caMD5]:
+                            self.wa.cell(row=int(child[self.ca])+1, column=self.caAlbumImg+1).value = 'AlbumImage'
+                        self.getAlbumImages(child[self.caItem])
     
 a = addSeqs()
