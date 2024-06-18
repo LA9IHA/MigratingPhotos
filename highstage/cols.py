@@ -10,9 +10,18 @@ class colsHighStage:
         
         self.testMode = True # Set to False if it is for a production run
         
+        # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
+        # parent album names with ZZZ and name topParent ZZZ.
+        
+        self.topParent = 'SPC1064-1A'
+        self.topParent = 'ALBUM1732-1A'
+        self.topParent = 'ALBUM1148-1A'
+        self.topParent = 'ALBUM1027-1A' # Summer 2018
+        self.topParent = 'ALBUM1248-1A' # Boat
+
         #self.homedir = "/Volumes/home/Oppgaver/transfer/"
         self.homedir = "/Volumes/T7Touch/album/transfer/"
-        self.treedir = self.homedir + "tree4/"
+        self.treedir = self.homedir + "tree6w/"
         self.subdir = self.homedir + "source/"
         self.injectdir = self.subdir + "inject/"
         
@@ -34,13 +43,6 @@ class colsHighStage:
         self.sqlFileName = 'metadata.sql'
         self.usersFileName = 'users.txt'
         self.userSqlFileName = 'users.sql'
-        
-        # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
-        # parent album names with ZZZ and name topParent ZZZ.
-        
-        #self.topParent = 'SPC1064-1A'
-        #self.topParent = 'ALBUM1732-1A'
-        self.topParent = 'ALBUM1148-1A'
         
         self.path = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
         self.path[0] = self.treedir

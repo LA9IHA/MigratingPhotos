@@ -81,6 +81,7 @@ class xport(colsHighStage):
     # Define an MD5 hash for album to recognize album pictures
     def createAMD5(self, r):
         md = self.MDerr
+        rnum = 0
         if (r[self.caFileName] != ''):
             rnum = int(r[self.ca]) + 1
             fdir = self.subdir + 'ALBUMS/' + r[self.caBareItem] + '/' + r[self.caBareItem] + '/' + r[self.caFileName]
@@ -99,13 +100,14 @@ class xport(colsHighStage):
                     #
                     # FIX THIS! Need to mark album files of child album
                     #
-                    self.wa.cell(row=rnum, column=self.caAlbumImg+1).value = 'ALBUM FILE'
-                print ('CHILD ALBUM: ', row[self.caItem], ' - ', albFile)
+                    self.wa.cell(row=int(r[self.ca]) + 1, column=self.caAlbumImg+1).value = 'ALBUM FILE'
+                # print ('CHILD ALBUM: ', row[self.caItem], ' - ', albFile)
                 self.createTree(row)
        
         
     def createDir(self, r):
         subtreepath = ''
+        rnum = 0
         for n in range (self.path_depth + 1):
             subtreepath = subtreepath + self.path[n]
             if n>0:
