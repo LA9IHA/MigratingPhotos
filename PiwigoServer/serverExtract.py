@@ -6,6 +6,7 @@ import shutil
 import hashlib
 import pandas as pd
 import fnmatch
+import glob
 
 import mysql.connector
 
@@ -24,13 +25,14 @@ class extractTables ():
         
         self.dbName = 'album'
         self.host='localhost'
-        self.user='ottar'
-        self.password='ottar'
-        self.migrateDir = '/home/ottar/migration/tables/'
+        self.user='migrationuser'
+        self.password='secretPassword'
+        self.migrateDir = '/tmp/'
             
-        #tables = self.getAllTableNames()
-        #for table in tables:
-        #    self.dumpTable (table)
+        self.delTables()
+        tables = self.getAllTableNames()
+        for table in tables:
+            self.dumpTable (table)
         
         tables = self.getCSVfiles()
         for table in tables:
@@ -92,11 +94,16 @@ class extractTables ():
         
         table = tableName[0]
         csvFile = ''
-        if os.path.exists(file_path):
-            csvFile = self.migrateDir + tableName + '.csv'
+        if os.path.exists(self.migrateDir):
+            csvFile = self.migrateDir + tableName
             df = pd.read_csv(csvFile)
             df.to_excel(self.migrateDir + tableName + '.xlsx', index=False)
-            os.remove(csvFile)
+            #os.remove(csvFile)
+            
+    def delTables(self):
+        csv_files = glob.glob(self.migrateDir + '*.csv')
+        for file in csv_files:
+            os.remove(file)
   
 a = extractTables()
 
