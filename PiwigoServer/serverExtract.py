@@ -2,8 +2,6 @@
 # (C) 2024: Ottar Kvindesland, Licence: GPL 2.0
 # Purpose: Export from HighStage album to Piwigo Fils structure. Build metadata from items
 
-
-
 import datetime
 import os
 import shutil
@@ -34,6 +32,7 @@ class extractTables ():
         self.user='migrationuser'
         self.password='secretPassword'
         self.migrateDir = '/tmp/'
+        zipFileName = 'dbdump.zip'
             
         tables = self.getAllTableNames()
         zipFiles = []
@@ -41,11 +40,16 @@ class extractTables ():
         for table in tables:
             self.dumpTable (table[0])
             self.genXlsx (table[0])
-            zipFiles.add(table[0] + '.xlsx')
+            zipFiles.append(table[0] + '.xlsx')
             
-        with zipfile.ZipFile('dbdump.zip', 'w') as dumpzip:
+        with zipfile.ZipFile(zipFileName, 'w') as dumpzip:
             for fileName in zipFiles:
                 dumpzip.write(fileName)
+                if os.path.exists(fileName):
+                    os.remove(fileName)
+            shutil.move(zipFileName, os.path.expanduser('~'))
+            
+        print ('\n\nFinished, you have to delete as above now!')
         
     def getAllTableNames(self):
         
@@ -84,15 +88,6 @@ class extractTables ():
         cursor.execute(c3)
         cursor.execute(c4)
         cursor.execute(c5)
-        
-    def getCSVfiles(self):
-        
-        results = [file for file in os.listdir(self.migrateDir) if fnmatch.fnmatch(file, '*.csv')]
-        r = []
-        for row in results:
-            r.append(row)
-            
-        return r
 
     def genXlsx (self, tableName):
         
