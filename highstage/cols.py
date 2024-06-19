@@ -8,7 +8,7 @@ class colsHighStage:
 
     def __init__(self):
         
-        self.testMode = True # Set to False if it is for a production run
+        self.testMode = False # Set to False if it is for a production run
         
         # Define top parent in HighStage. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
@@ -37,7 +37,7 @@ class colsHighStage:
         
         self.fRefList = 'References.xlsx'
         
-        self.PiwigoPic = 'photos.xlsx'
+        self.PiwigoPic = 'images.xlsx'
         self.PiwigoAlbum = 'categories.xlsx'
         
         self.sqlFileName = 'metadata.sql'

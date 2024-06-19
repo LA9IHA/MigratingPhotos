@@ -11,7 +11,7 @@ from openpyxl.reader.excel import load_workbook
 
 from cols import colsHighStage
 
-# Purpose: Prepare HighStage album with photos for  igration to Piwigo
+# Purpose: Prepare HighStage album with photos for ingestion to Piwigo
 # Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
 # Licence: GNU 2.0
 # Author: Ottar Kvindesland, 2024
@@ -22,11 +22,11 @@ class getId(colsHighStage):
         
         super().__init__()
         
-        pwgfile = self.subdir + self.PiwigoPic
+        pwgfile = self.injectdir + self.PiwigoPic
         self.pwg_wb = load_workbook(filename=pwgfile)
         self.wpwg = self.pwg_wb.worksheets[0]
         
-        pwgafile = self.subdir + self.PiwigoAlbum
+        pwgafile = self.injectdir + self.PiwigoAlbum
         self.pwa_wb = load_workbook(filename=pwgafile)
         self.wpwa = self.pwa_wb.worksheets[0]
         

@@ -9,17 +9,15 @@ from openpyxl.descriptors.base import DateTime
 from openpyxl.reader.excel import load_workbook
 from os import listdir
 
-from colsHighStage import colsHighStage
+from cols import colsHighStage
 
-# Purpose: Prepare HighStage album with photos for  igration to Piwigo
-# Pre requisites: Album.xlsx and Pic.xlsx is created from Highstage
+# Purpose: Check the integrity of the media files
 # Licence: GNU 2.0
-# Author: Ottar Kvindesland, 2024
-# Reference: https://piwigo.miraheze.org/wiki/HighstageExport
+# Copyright: Ottar Kvindesland, 2024
 
 class CheckPics(colsHighStage):
 
-    def __init__(self, h, t, s):
+    def __init__(self):
         super().__init__()
         
         self.path_depth = 0
