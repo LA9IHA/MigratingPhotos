@@ -9,7 +9,6 @@ class cols:
     def __init__(self):
         
         self.testMode = True # Set to False if it is for a production run
-        self.firstTime = False # Set to False after the init.py has ran through successfully with testMode False
         
         # Define top parent in Gallery 1.14.0. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
@@ -91,7 +90,7 @@ class cols:
         self.cpPath = 17       # R
         self.cpLastPic = 24    # V
 
-        self.colsPic = ['Description', 'FileType', 'Item', 'FileName', 'ParentDoc', 'EditBy', 'Comment', 'AlbumFile', 'Initdate', 'KeyWord', 'Seq', 'cp', 'BareItem', 'FileError', 'Dest', 'PiwigoId', 'MigrInfo', 'Path', '', '', '', '', '', '', 'LastPic']
+        self.colsPic = ['Description', 'FileType', 'Item', 'FileName', 'ParentDoc', 'EditBy', 'Comment', 'AlbumFile', 'Initdate', 'KeyWord', 'Seq', 'cp', 'BareItem', 'FileError', 'Dest', 'PiwigoId', 'MigrInfo', 'Path', 'LastPic']
 
         # Columns used in References.xlsx
         self.rpParent = 4 # E
