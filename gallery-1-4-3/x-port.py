@@ -22,7 +22,7 @@ class xport(cols):
         
         super().__init__()
 
-        self.path_depth = 0
+        #self.path_depth = 0
         
         if os.path.exists(self.treedir):
             shutil.rmtree(self.treedir)
@@ -61,37 +61,41 @@ class xport(cols):
 
     # Create a directory with sub-directories and photos
     def createTree(self, row):
-        self.path_depth += 1
+        #self.path_depth += 1
         self.createDir(row)
         self.createPics(row)
         self.createChildren(row)
-        self.path_depth -= 1
+        #self.path_depth -= 1
         
     # Create child directories under a parent dirctory
     def createChildren(self, r):
         for row in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
             if row[self.caParentDoc] == r[self.caItem]:
-                albFile = ''
                 self.createTree(row)
         
     def createDir(self, r):
         
-        thisPath = self.treedir = self.homedir + r[self.caAlbumPath]
+        thisPath = self.treedir + r[self.caAlbumPath]
         if not os.path.exists(thisPath):
             os.makedirs(thisPath)
 
     def createPics(self, r):
-        
-        for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
-            if r[self.caItem] == pic[self.cpParentDoc] and pic[self.cpDescription] is not None:
-                sourcePath = self.subdir + 'PHOTOS/' + r[self.cpFileName]
-                destPath = self.treedir + pic[self.cpPath]
-                try:
-                    shutil.copy(sourcePath, destPath)
-                except Exception as e:
-                    #print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
-                    with open(self.subdir + 'x-port.log') as logfile:
-                        errmsg = 'FAILED COPY ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: ', e, '\n'
-                        logfile.write(errmsg)
+        lineNo = 0
+        for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=True):
+            if pic[self.cpItem] is not None and r[self.caItem] is not None and pic[self.cpFileName] is not None and pic[self.cpPath] is not None:
+                if r[self.caItem] == str(pic[self.cpParentDoc]):
+                    if str(r[self.caItem]) == str(pic[self.cpParentDoc]):
+                        sourcePath = self.subdir + 'PHOTOS' + pic[self.cpFileName]
+                        destPath = self.treedir + str(pic[self.cpPath])
+                        lineNo += 1
+                        if (lineNo % 100 == 0):
+                            print ('Copied ', lineNo, ' files to export directory ', self.treedir)
+                        try:
+                            shutil.copy(sourcePath, destPath)
+                        except Exception as e:
+                            #print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
+                            with open(self.subdir + 'x-port.log') as logfile:
+                                errmsg = 'FAILED COPY ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: ', e, '\n'
+                                logfile.write(errmsg)
     
 a = xport()
