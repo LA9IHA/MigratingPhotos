@@ -20,6 +20,7 @@ class cols:
         self.treedir = self.homedir + "tree01/"
         self.subdir = self.homedir + "source/"
         self.injectdir = self.subdir + "inject/"
+        self.dbdumpdir = self.subdir + "dbdump/"
         
         self.fInputAlbum = 'Album.xlsx'
         self.fOutputAlbum = self.fInputAlbum
