@@ -79,7 +79,6 @@ class getId(cols):
                     if destpath != '' and n>1:
                         pwgref = self.getPiwigoPicRef(destpath)
                         if pwgref.isnumeric():
-                            print ('DestPath: ', destpath, ' - PWGREF: ', pwgref)
                             self.wp.cell(row=n, column=self.cpPiwigoId+1).value = int(pwgref)
                             tagged += 1
         print ('\nReferenced ', tagged, ' photos\n')
