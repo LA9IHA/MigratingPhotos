@@ -19,7 +19,7 @@ class cols:
         self.homedir = "/Volumes/T7Touch/gallery/transfer/"
         self.treedir = self.homedir + "tree01/"
         self.subdir = self.homedir + "source/"
-        self.injectdir = self.subdir + "inject/"
+        self.injectdir = self.homedir + "dest/"
         self.dbdumpdir = self.subdir + "dbdump/"
         
         self.fInputAlbum = 'Album.xlsx'

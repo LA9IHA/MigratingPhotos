@@ -62,8 +62,10 @@ class getId(cols):
         if runAlb:
             self.getSourceAlbumId()
         
-        self.pic_wb.save(self.subdir + self.fOutputPic)
-        self.album_wb.save(self.subdir + self.fOutputAlbum)
+        if runPic:
+            self.pic_wb.save(self.subdir + self.fOutputPic)
+        if runAlb:
+            self.album_wb.save(self.subdir + self.fOutputAlbum)
         
     def getSourcePicsId(self):
         

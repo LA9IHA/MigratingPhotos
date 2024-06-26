@@ -13,9 +13,9 @@ from os import listdir
 # (C) 2024: Ottar Kvindesland, Licence: GPL 2.0
 # Purpose: Build SQL script for reference sequence numbers in album and files from Gallery
 
-from cols import colsHighStage
+from cols import cols
 
-class metadataPic(colsHighStage):
+class metadataPic(cols):
 
     def __init__(self):
         
@@ -40,58 +40,9 @@ class metadataPic(colsHighStage):
                 sqlFile.write('')
                 
         self.metaPics()
-        self.metaAlbums()
+        #self.metaAlbums()
         
         self.clearUserList()
-        
-    def metaPics(self):
-        n = 0
-        sql = ''
-        userSql = ''
-        users = ''
-        for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
-            n+=1
-            picLine = str(self.wp.cell(row=n, column=self.cp+1).value)
-            picSourceId = str(self.wp.cell(row=n, column=self.cpItem+1).value)
-            picDescr = str(self.wp.cell(row=n, column=self.cpDescription+1).value)
-            picWorkspace = str(self.wp.cell(row=n, column=self.cpWorkspace+1).value)
-            picEventTime = str(self.wp.cell(row=n, column=self.cpEventTime+1).value)
-            picEditBy = str(self.wp.cell(row=n, column=self.cpEditBy+1).value)
-            picComment = str(self.wp.cell(row=n, column=self.cpNote+1).value)
-            picAlias = str(self.wp.cell(row=n, column=self.cpAlias+1).value)
-            picHistory = str(self.wp.cell(row=n, column=self.cpNote2+1).value)
-            picFirstTimeStorage = str(self.wp.cell(row=n, column=self.cpDate2+1).value)
-            picDate3 = str(self.wp.cell(row=n, column=self.cpDate3+1).value)
-            picExif = str(self.wp.cell(row=n, column=self.cpExif+1).value)
-            picInitdate = str(self.wp.cell(row=n, column=self.cpInitdate+1).value)
-            picParentDoc = str(self.wp.cell(row=n, column=self.cpParentDoc+1).value)
-            picFileName = str(self.wp.cell(row=n, column=self.cpFileName+1).value)
-            picBareItem = str(self.wp.cell(row=n, column=self.cpBareItem+1).value)
-            picAlbumFile = str(self.wp.cell(row=n, column=self.cpAlbumFile+1).value)
-            picSeq = self.wp.cell(row=n, column=self.cpSeq+1).value
-            picFileError = str(self.wp.cell(row=n, column=self.cpFileError+1).value)
-            picDest = str(self.wp.cell(row=n, column=self.cpDest+1).value)
-            picPiwigoId = self.wp.cell(row=n, column=self.cpPiwigoId+1).value
-            
-            if picPiwigoId is not None:
-                pw = str(picPiwigoId)
-                if pw != '' and n>1:
-                    sql = sql + 'update images set name = \'' + picDescr + '\', date_available = \'' + self.toPiwigoDate(picEventTime) + '\', date_metadata_update = now() where id = \'' + pw + '\';\n'
-                    if picSeq is not None:
-                        sql = sql + 'update image_category set rank = \'' + str(picSeq) + '\' where image_id = \'' + pw + '\';\n'
-                    userSql = userSql + 'update images set author = \'' + picEditBy + '\' where id = \'' + pw + '\';\n'
-                    users = users + picEditBy + '\n'
-                    
-            if (n % 100 == 0):
-                print (n, ' pictures done')
-                
-        print 
-        with open(self.injectdir + self.usersFileName, 'a') as usersFile:
-            usersFile.write(users)
-        with open(self.injectdir + self.userSqlFileName, 'a') as userSqlFile:
-            userSqlFile.write(userSql)
-        with open(self.injectdir + self.sqlFileName, 'a') as sqlFile:
-            sqlFile.write(sql)
         
     def metaAlbums(self):
         n = 0
@@ -124,7 +75,7 @@ class metadataPic(colsHighStage):
                         sql += ', rank = \'' + albSeq + '\''
                     sql += ' where id = \'' + pw +  '\';\n'
                     if albSeq is not None:
-                        sql = sql + 'update image_category set rank = \'' + str(picSeq) + '\' where image_id = \'' + pw + '\';\n'
+                        sql = sql + 'update image_category set rank = \'' + str(picSeq+1) + '\' where image_id = \'' + pw + '\';\n'
                     #userSql = userSql + 'update images set author = \'' + picEditBy + '\' where id = \'' + pw + '\';\n'
                     #users = users + picEditBy + '\n'
                     
@@ -144,37 +95,37 @@ class metadataPic(colsHighStage):
         userSql = ''
         users = ''
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic , values_only=False):
-            n+=1
-			picDescription = str(pic[self.cpDescription].value)
-			picFileType = str(pic[self.cpFileType].value)
-			picItem = str(pic[self.cpItem].value)
-			picFileName = str(pic[self.cpFileName].value)
-			picParentDoc = str(pic[self.cpParentDoc].value)
-			picEditBy = str(pic[self.cpEditBy].value)
-			picComment = str(pic[self.cpComment].value)
-			picAlbumFile = str(pic[self.cpAlbumFile].value)
-			picInitdate = str(pic[self.cpInitdate].value)
-			picKeyWord = str(pic[self.cpKeyWord].value)
-			picSeq = str(pic[self.cpSeq].value)
-			picCp = str(pic[self.cp].value)
-			picBareItem = str(pic[self.cpBareItem].value)
-			picFileError = str(pic[self.cpFileError].value)
-			picDest = str(pic[self.cpDest].value)
-			picPiwigoId = str(pic[self.cpPiwigoId].value)
-			picMigrInfo = str(pic[self.cpMigrInfo].value)
-			picPath = str(pic[self.cpPath].value)
+            picDescription = str(pic[self.cpDescription].value)
+            picFileType = str(pic[self.cpFileType].value)
+            picItem = str(pic[self.cpItem].value)
+            picFileName = str(pic[self.cpFileName].value)
+            picParentDoc = str(pic[self.cpParentDoc].value)
+            picEditBy = str(pic[self.cpEditBy].value)
+            picComment = str(pic[self.cpComment].value)
+            picAlbumFile = str(pic[self.cpAlbumFile].value)
+            picInitdate = str(pic[self.cpInitdate].value)
+            picKeyWord = str(pic[self.cpKeyWord].value)
+            try:
+                picSeq = int(pic[self.cpSeq].value) + 1
+            except ValueError:
+                print("Error: The value is not a valid integer representation: ", pic[self.cpSeq].value)
+            picCp = str(pic[self.cp].value)
+            picBareItem = str(pic[self.cpBareItem].value)
+            picFileError = str(pic[self.cpFileError].value)
+            picDest = str(pic[self.cpDest].value)
+            picPiwigoId = str(pic[self.cpPiwigoId].value)
+            picMigrInfo = str(pic[self.cpMigrInfo].value)
+            picPath = str(pic[self.cpPath].value)
 
             if pic[self.cpPiwigoId].value is not None:
-                if picPiwigoId != '' and n>1:
+                if n>1:
                     sql = sql + 'update images set name = \'' + picDescription + '\''
-                    if pic[self.cpSeq].value is not None:
-                        sql += ', rank = \'' + picSeq + '\''
                     sql += ' where id = \'' + picPiwigoId +  '\';\n'
                     if pic[self.cpSeq].value is not None:
-                        sql = sql + 'update image_category set rank = \'' + picSeq + '\' where image_id = \'' + picPiwigoId + '\';\n'
-                    #userSql = userSql + 'update images set author = \'' + picEditBy + '\' where id = \'' + picPiwigoId + '\';\n'
-                    #users = users + picEditBy + '\n'
-                    
+                        sql = sql + 'update image_category set rank = \'' + str(picSeq) + '\' where image_id = \'' + picPiwigoId + '\';\n'
+                    userSql = userSql + 'update images set author = \'' + picEditBy + '\' where id = \'' + picPiwigoId + '\';\n'
+                    users = users + picEditBy + '\n'
+            n+=1
             if (n % 100 == 0):
                 print (n, ' pics done')
                 
@@ -184,7 +135,6 @@ class metadataPic(colsHighStage):
             userSqlFile.write(userSql)
         with open(self.injectdir + self.sqlFileName, 'a') as sqlFile:
             sqlFile.write(sql)
-
     
     def toPiwigoDate (self, d):
         
