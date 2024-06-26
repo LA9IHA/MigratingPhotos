@@ -50,48 +50,50 @@ class cols:
         self.custom_video_mime_types = ['media', 'video']
         
         # Columns used in Album.xlsx
-        self.caJson = 0        # A
-        self.caAlbumName = 1   # B
-        self.caItem = 2        # C
-        self.caEditBy = 3      # D
-        self.caParentDoc = 4   # E
-        self.caDescription = 5 # F
-        self.caEventTime = 6   # G
-        self.caInitdate = 7    # H
-        self.ca = 8            # I
-        self.caFileName = 9    # J
-        self.caBareItem = 10   # K
-        self.caSeq = 11        # L
-        self.caMD5 = 12        # M
-        self.caPiwigoId = 13   # N
-        self.caAlbumImg = 14   # O
-        self.caAlbumPath = 15  # P
-        self.caLastAlbum = 16  # T
+        self.caJson = 0         # A
+        self.caAlbumName = 1    # B
+        self.caItem = 2         # C
+        self.caEditBy = 3       # D
+        self.caParentDoc = 4    # E
+        self.caDescription = 5  # F
+        self.caEventTime = 6    # G
+        self.caInitdate = 7     # H
+        self.ca = 8             # I
+        self.caFileName = 9     # J
+        self.caBareItem = 10    # K
+        self.caSeq = 11         # L
+        self.caMD5 = 12         # M
+        self.caPiwigoId = 13    # N
+        self.caAlbumImg = 14    # O
+        self.caAlbumPath = 15   # P
+        self.caParentPwgId = 16 # S
+        self.caLastAlbum = 20   # T
         
-        self.colsAlbum = ['Json', 'AlbumName', 'Item', 'EditBy', 'ParentDoc', 'Description', 'EventTime', 'Initdate', 'ca', 'FileName', 'BareItem', 'Seq', 'MD5', 'PiwigoId', 'AlbumImg', 'AlbumPath', 'LastAlbum']
+        self.colsAlbum = ['Json', 'AlbumName', 'Item', 'EditBy', 'ParentDoc', 'Description', 'EventTime', 'Initdate', 'ca', 'FileName', 'BareItem', 'Seq', 'MD5', 'PiwigoId', 'AlbumImg', 'AlbumPath', 'ParentPwgId', '', '', 'LastAlbum']
         
         # Columns used in Pic.xlsx
-        self.cpDescription = 0 # A 
-        self.cpFileType = 1    # B
-        self.cpItem = 2        # C  Item
-        self.cpFileName = 3    # D
-        self.cpParentDoc = 4   # E
-        self.cpEditBy = 5      # F 
-        self.cpComment = 6     # G
-        self.cpAlbumFile = 7   # H  Also albumFile for albums when file_name (3-D) is empty
-        self.cpInitdate = 8    # I  Date taken
-        self.cpKeyWord = 9     # J
-        self.cpSeq = 10        # K  Also for albums
-        self.cp = 11           # L  ID
-        self.cpBareItem = 12   # M
-        self.cpFileError = 13  # N  Error message
-        self.cpDest = 14       # O
-        self.cpPiwigoId = 15   # P
-        self.cpMigrInfo = 16   # Q
-        self.cpPath = 17       # R
-        self.cpLastPic = 24    # V
+        self.cpDescription = 0  # A 
+        self.cpFileType = 1     # B
+        self.cpItem = 2         # C  Item
+        self.cpFileName = 3     # D
+        self.cpParentDoc = 4    # E
+        self.cpEditBy = 5       # F 
+        self.cpComment = 6      # G
+        self.cpAlbumFile = 7    # H  Also albumFile for albums when file_name (3-D) is empty
+        self.cpInitdate = 8     # I  Date taken
+        self.cpKeyWord = 9      # J
+        self.cpSeq = 10         # K  Also for albums
+        self.cp = 11            # L  ID
+        self.cpBareItem = 12    # M
+        self.cpFileError = 13   # N  Error message
+        self.cpDest = 14        # O
+        self.cpPiwigoId = 15    # P
+        self.cpMigrInfo = 16    # Q
+        self.cpPath = 17        # R
+        self.cpParentPwgId = 18 # S
+        self.cpLastPic = 24     # V
 
-        self.colsPic = ['Description', 'FileType', 'Item', 'FileName', 'ParentDoc', 'EditBy', 'Comment', 'AlbumFile', 'Initdate', 'KeyWord', 'Seq', 'cp', 'BareItem', 'FileError', 'Dest', 'PiwigoId', 'MigrInfo', 'Path', 'LastPic']
+        self.colsPic = ['Description', 'FileType', 'Item', 'FileName', 'ParentDoc', 'EditBy', 'Comment', 'AlbumFile', 'Initdate', 'KeyWord', 'Seq', 'cp', 'BareItem', 'FileError', 'Dest', 'PiwigoId', 'MigrInfo', 'Path', 'cpParentPwgId', '', '', '', '', 'LastPic']
 
         # Columns used in References.xlsx
         self.rpParent = 4 # E
