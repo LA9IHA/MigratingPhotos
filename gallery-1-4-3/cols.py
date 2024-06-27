@@ -27,7 +27,9 @@ class cols:
         
         self.fInputPic = 'Pic.xlsx'
         self.fOutputPic = self.fInputPic
-        
+
+        self.fInterAlbum = 'interAlbum.xlsx'
+
         if self.testMode:
             self.fOutputAlbum = 'Album1.xlsx' # When tested, this should be the same as Album.xlsx, set self.testMode to False
             self.fOutputPic = 'Pic1.xlsx'     # When tested, this should be the same as Pic.xlsx, set self.testMode to False
@@ -144,3 +146,10 @@ class cols:
         self.papermalink = 12                # M
         self.palastmodified = 13             # N
         self.palastcol = 15                  # P
+
+        self.iaDescription = 0 # A
+        self.iaFileType = 1    # B
+        self.iaItem = 2        # C
+        self.iaFileName = 3    # D
+        self.iaParentDoc = 4   # E
+        self.iaLastCol = 5     # F
