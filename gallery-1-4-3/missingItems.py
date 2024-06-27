@@ -49,9 +49,10 @@ class albumRefs(cols):
                     if pic[self.cpParentDoc].value == ref[self.iaParentDoc].value and ref[self.iaItem].value is not None:
                         hits += 1
                         if hits == nextLocation:
+                            if pic[self.cpItem].value is None:
+                                newItems += 1
                             self.wp.cell(row=n, column=self.cpItem+1).value = str(ref[self.iaItem].value)
                             nextLocation += 1
-                            newItems += 1
                             #print (n, ' Child: ', pic[self.cpItem].value, ' --- Parent: ', pic[self.cpParentDoc].value)
                     else:
                         hits = 0

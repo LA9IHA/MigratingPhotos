@@ -93,9 +93,10 @@ class cols:
         self.cpMigrInfo = 16    # Q
         self.cpPath = 17        # R
         self.cpParentPwgId = 18 # S
+        self.cpAlbImgIdId = 19  # T
         self.cpLastPic = 24     # V
 
-        self.colsPic = ['Description', 'FileType', 'Item', 'FileName', 'ParentDoc', 'EditBy', 'Comment', 'AlbumFile', 'Initdate', 'KeyWord', 'Seq', 'cp', 'BareItem', 'FileError', 'Dest', 'PiwigoId', 'MigrInfo', 'Path', 'cpParentPwgId', '', '', '', '', 'LastPic']
+        self.colsPic = ['Description', 'FileType', 'Item', 'FileName', 'ParentDoc', 'EditBy', 'Comment', 'AlbumFile', 'Initdate', 'KeyWord', 'Seq', 'cp', 'BareItem', 'FileError', 'Dest', 'PiwigoId', 'MigrInfo', 'Path', 'ParentPwgId', 'AlbImgIdId', '', '', '', 'LastPic']
 
         # Columns used in References.xlsx
         self.rpParent = 4 # E
@@ -146,7 +147,8 @@ class cols:
         self.papermalink = 12                # M
         self.palastmodified = 13             # N
         self.palastcol = 15                  # P
-
+        
+        # Columns from interAlbum.xlsx
         self.iaDescription = 0 # A
         self.iaFileType = 1    # B
         self.iaItem = 2        # C

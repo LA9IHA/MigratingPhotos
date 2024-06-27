@@ -83,19 +83,23 @@ class xport(cols):
         lineNo = 0
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=True):
             if pic[self.cpItem] is not None and r[self.caItem] is not None and pic[self.cpFileName] is not None and pic[self.cpPath] is not None:
-                if r[self.caItem] == str(pic[self.cpParentDoc]):
-                    if str(r[self.caItem]) == str(pic[self.cpParentDoc]):
-                        sourcePath = self.subdir + 'PHOTOS' + pic[self.cpFileName]
-                        destPath = self.treedir + str(pic[self.cpPath])
+                if r[self.caItem].value == str(pic[self.cpParentDoc].value):
+                    if str(r[self.caItem].value) == str(pic[self.cpParentDoc].value):
+                        sourcePath = self.subdir + 'PHOTOS' + pic[self.cpFileName].value
+                        destPath = self.treedir + str(pic[self.cpPath].value)
                         lineNo += 1
                         if (lineNo % 100 == 0):
                             print ('Copied ', lineNo, ' files to export directory ', self.treedir)
-                        try:
-                            shutil.copy(sourcePath, destPath)
-                        except Exception as e:
-                            #print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
-                            with open(self.subdir + 'x-port.log') as logfile:
-                                errmsg = 'FAILED COPY ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: ', e, '\n'
-                                logfile.write(errmsg)
+                        if str(pic[self.cpPath].value) in self.custom_image_extensions:
+                            try:
+                                shutil.copy(sourcePath, destPath)
+                            except Exception as e:
+                                #print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
+                                with open(self.subdir + 'x-port.log') as logfile:
+                                    errmsg = 'FAILED COPY ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: ', e, '\n'
+                                    logfile.write(errmsg)
+                        else:
+                            errmsg = 'Could not copy ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: File type ',  pic[self.cpFileType].value,' not in set ', self.custom_image_extensions,'\n'
+                            logfile.write(errmsg)
     
 a = xport()

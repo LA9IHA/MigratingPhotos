@@ -48,19 +48,25 @@ class getId(cols):
         
         runPic = False
         runAlb = False
+        runAlbImg = False
         if len(pa) >= 2:
             if pa[1] == 'P':
                 runPic = True
             elif pa[1] == 'A':
                 runAlb = True
+            elif pa[1] == 'I':
+                runAlbImg = True
         else:
             runPic = True
             runAlb = True
+            runAlbImg = True
         
         if runPic:
             self.getSourcePicsId()
         if runAlb:
             self.getSourceAlbumId()
+        if runAlbImg:
+            self.defineBottomAlbumImages()
         
         if runPic:
             self.pic_wb.save(self.subdir + self.fOutputPic)
@@ -140,6 +146,27 @@ class getId(cols):
                     print ('ERROR: Double entry on line ', n, ' Piwigo ID col N = ', album[self.caPiwigoId].value, ' for item: ', path)
                 else:
                     self.wa.cell(row=n, column=self.caPiwigoId+1).value = pid
+                    
+    def defineBottomAlbumImages(self):
+        n = 1
+        for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
+            if (n % 100) == 0:
+                print ('Checking ', n, ' pics for album images')
+            if n > 1 and pic[self.cpAlbumFile].value is not None and pic[self.cpPiwigoId].value is not None and pic[self.cpFileName].value is not None and pic[self.cpDescription].value is not None:
+                self.wp.cell(row=n, column=self.cpAlbImgIdId+1).value = pic[self.cpPiwigoId].Value
+            n += 1
+            
+        m = 1
+        for pic1 in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
+            if pic1[self.cpDescription].Value is None pic1[self.cpAlbImgIdId].Value is not None:
+                if (m % 100) == 0:
+                    print ('Checking ', m, ' albums for album images')
+                m += 1
+                n = 1
+                for pic2 in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
+                    if pic1[self.cpParentDoc].value == pic2[self.cpItem].value and pic2[self.cpAlbumFile].value is not None:
+                        self.wp.cell(row=n, column=self.cpAlbImgIdId+1).value = pic1[self.cpPiwigoId].Value
+                    n += 1
 
 if __name__ == "__main__":
     a = getId(sys.argv)
