@@ -39,26 +39,26 @@ class albumRefs(cols):
         
     def linkAlbums(self):
         
+        n = 1
         hits = 0
         nextLocation = 1
+        newItems = 0
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=False):
-            if n > 0 and pic[self.cpDescription].value is None:
-                m = 0
-                hits = 0
+            if n > 1 and pic[self.cpDescription].value is None:
                 for ref in self.iwa.iter_rows(min_row=1, max_row=self.iwa.max_row, min_col=1, max_col=self.iaLastCol, values_only=False):
-                    if m>0 and pic[self.cpParentDoc].value == alb[self.iaParentDoc].value:
+                    if pic[self.cpParentDoc].value == ref[self.iaParentDoc].value and ref[self.iaItem].value is not None:
                         hits += 1
-                        if pic[self.cpItem].value is None:
-                            self.wp.cell(row=n, column=self.cpItem+1).value = int(alb[self.iaItem].value)
-                            print (n, ' Child: ', pic[self.cpItem].value, ' --- Parent: ', pic[self.cpParentDoc].value)
-                        hits += 1
+                        if hits == nextLocation:
+                            self.wp.cell(row=n, column=self.cpItem+1).value = str(ref[self.iaItem].value)
+                            nextLocation += 1
+                            newItems += 1
+                            #print (n, ' Child: ', pic[self.cpItem].value, ' --- Parent: ', pic[self.cpParentDoc].value)
                     else:
                         hits = 0
                         nextLocation = 1
-                    m+=1
-
             n+=1
             if (n % 100 == 0):
                 print (n, ' pics checked')
+        print ('\nDone, ', newItems, ' items added to', self.fOutputPic)
                   
 a = albumRefs()
