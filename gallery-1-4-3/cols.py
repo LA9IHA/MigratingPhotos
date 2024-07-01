@@ -13,14 +13,15 @@ class cols:
         # Define top parent in Gallery 1.14.0. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
         
-        self.topParent = 'Astronomy'
+        self.topParent = 'ottar_egne'
 
         #self.homedir = "/Volumes/home/Oppgaver/transfer/"
         self.homedir = "/Volumes/T7Touch/gallery/transfer/"
-        self.treedir = self.homedir + "tree01/"
+        self.treedir = self.homedir + self.topParent + "/"
         self.subdir = self.homedir + "source/"
         self.injectdir = self.homedir + "dest/"
         self.dbdumpdir = self.subdir + "dbdump/"
+        self.errLog = self.subdir + 'x-port.log'
         
         self.fInputAlbum = 'Album.xlsx'
         self.fOutputAlbum = self.fInputAlbum

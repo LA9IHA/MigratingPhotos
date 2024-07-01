@@ -39,6 +39,12 @@ class xport(cols):
                 print(f'Could not purge {filepath}')
                 
         self.creationDate = datetime.datetime(1980, 1, 1, 1, 0)
+        self.lineNo = 0
+
+        if not os.path.exists(self.errLog):
+            with open(self.errLog, 'w') as logfile:
+                logfile.write('x-port errs')
+            logfile.close()
         
         picfile = self.subdir + self.fInputPic
         self.pic_wb = load_workbook(filename=picfile)
@@ -48,6 +54,8 @@ class xport(cols):
         self.album_wb = load_workbook(filename=albumfile)
         self.wa = self.album_wb.worksheets[0]
         
+        print ('x-port, Gallery exporting from: ', self.topParent)
+
         self.makeTopAlbums(self.wa)
         
         self.album_wb.save(self.subdir + self.fOutputAlbum)
@@ -55,7 +63,7 @@ class xport(cols):
 
     def makeTopAlbums (self, sheet):
             
-        for album in sheet.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
+        for album in self.wa.iter_rows(min_row=1, max_row=self.wa.max_row, min_col=1, max_col=self.caLastAlbum, values_only=True):
             if album[self.caParentDoc] == self.topParent:
                 self.createTree(album)
 
@@ -80,26 +88,24 @@ class xport(cols):
             os.makedirs(thisPath)
 
     def createPics(self, r):
-        lineNo = 0
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=True):
             if pic[self.cpItem] is not None and r[self.caItem] is not None and pic[self.cpFileName] is not None and pic[self.cpPath] is not None:
-                if r[self.caItem].value == str(pic[self.cpParentDoc].value):
-                    if str(r[self.caItem].value) == str(pic[self.cpParentDoc].value):
-                        sourcePath = self.subdir + 'PHOTOS' + pic[self.cpFileName].value
-                        destPath = self.treedir + str(pic[self.cpPath].value)
-                        lineNo += 1
-                        if (lineNo % 100 == 0):
-                            print ('Copied ', lineNo, ' files to export directory ', self.treedir)
-                        if str(pic[self.cpPath].value) in self.custom_image_extensions:
-                            try:
-                                shutil.copy(sourcePath, destPath)
-                            except Exception as e:
-                                #print ('FAILED COPY ', origFile, ' TO ', dest, ' ERROR MSG: ', e)
-                                with open(self.subdir + 'x-port.log') as logfile:
-                                    errmsg = 'FAILED COPY ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: ', e, '\n'
-                                    logfile.write(errmsg)
-                        else:
-                            errmsg = 'Could not copy ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: File type ',  pic[self.cpFileType].value,' not in set ', self.custom_image_extensions,'\n'
-                            logfile.write(errmsg)
+                if r[self.caItem] == pic[self.cpParentDoc]:
+                    sourcePath = self.subdir + 'PHOTOS' + pic[self.cpFileName]
+                    destPath = self.treedir + pic[self.cpPath]
+                    self.lineNo += 1
+                    #print ('FROM: ', sourcePath, '  ---- TO: ', destPath)
+                    if (self.lineNo % 100 == 0):
+                        print ('Copied ', self.lineNo, ' files to export directory ', self.treedir)
+                    if '.' + pic[self.cpPath].split(".")[-1] in self.custom_image_extensions:
+                        try:
+                            shutil.copy(sourcePath, destPath)
+                        except Exception as e:
+                            print ('FAILED COPY ', sourcePath, ' TO ', destPath, ' ERROR MSG: ', e)
+                            with open(self.errLog) as logfile:
+                                errmsg = 'FAILED COPY ', sourcePath, ' TO ', destPath, ' >>> ERROR MSG: ', e, '\n'
+                                logfile.write(errmsg)
+                    else:
+                        print ('.' + pic[self.cpPath].split(".")[-1], '  #### ', 'Cannot copy ', sourcePath, '--- Not in ', self.custom_image_extensions)
     
 a = xport()
