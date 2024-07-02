@@ -135,7 +135,9 @@ class init(cols):
             if pic[self.cpDescription] is not None and pic[self.cpPath] is None:
             	filnameDirs = pic[self.cpFileName].value.split("/")
             	if filnameDirs[1] != pic[self.cpParentDoc] and len(filnameDirs[2]) > 2:
-            		self.wp.cell(row=self.lines), column=self.cpFileName+1).value = '/' + pic[self.cpParentDoc] + '/' + filnameDirs[2]
+			goodFileName = column=self.cpFileName+1).value = '/' + pic[self.cpParentDoc] + '/' + filnameDirs[2]
+			print ('Line ', self.lines, ', Fixing :',  filnameDirs[1], ' ### Good file name is :', goodFileName)
+            		self.wp.cell(row=self.lines), column=self.cpFileName+1).value = goodFileName
             if (self.lines % 100) == 0:
                 print ('Added path to ', self.lines, ' photos')
             self.lines += 1
