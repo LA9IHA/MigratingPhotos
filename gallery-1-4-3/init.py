@@ -58,11 +58,16 @@ class init(cols):
         elif phase == 3:
             print ('     Define source location of files, add line numbers on Photos')
             self.pic2path()
+        elif phase == 4:
+            print ('     Check and fix paths in Pic.xlsx')
+            self.fixPath()
         else:
             print ('Unknown phase: ', phaseNo)
             
-        self.album_wb.save(self.subdir + self.fOutputAlbum)
-        self.pic_wb.save(self.subdir + self.fOutputPic)
+        if phase in [1, 2]:
+	        self.album_wb.save(self.subdir + self.fOutputAlbum)
+        if phase in [1, 3, 4]:
+	        self.pic_wb.save(self.subdir + self.fOutputPic)
         
     def addSeqPic (self):
         n = 1
@@ -123,6 +128,19 @@ class init(cols):
                 print ('Added path to ', self.lines, ' photos')
             self.lines += 1
            
+    def fixPath (self):
+        
+        self.lines = 1
+        for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=True):
+            if pic[self.cpDescription] is not None and pic[self.cpPath] is None:
+            	filnameDirs = pic[self.cpFileName].value.split("/")
+            	if filnameDirs[1] != pic[self.cpParentDoc] and len(filnameDirs[2]) > 2:
+            		self.wp.cell(row=self.lines), column=self.cpFileName+1).value = '/' + pic[self.cpParentDoc] + '/' + filnameDirs[2]
+            if (self.lines % 100) == 0:
+                print ('Added path to ', self.lines, ' photos')
+            self.lines += 1
+           
+           
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         a = init(sys.argv[1])
@@ -131,3 +149,4 @@ if __name__ == "__main__":
         print ('python3 init.py 1 : Run phase 1 to perform some housekeeping on Album.xlsx and Pic.xlsx')
         print ('python3 init.py 2 : Run phase 2 to define source location of directories, add line numbers on Albums')
         print ('python3 init.py 3 : Run phase 3 to define source location of files, add line numbers on Photos\n')
+        print ('python3 init.py 4 : Run phase 4 to check and fix paths in Pic.xlsx\n')
