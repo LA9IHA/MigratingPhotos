@@ -132,14 +132,17 @@ class init(cols):
         
         self.lines = 1
         for pic in self.wp.iter_rows(min_row=1, max_row=self.wp.max_row, min_col=1, max_col=self.cpLastPic, values_only=True):
-            if pic[self.cpDescription] is not None and pic[self.cpPath] is None:
-            	filnameDirs = pic[self.cpFileName].value.split("/")
-            	if filnameDirs[1] != pic[self.cpParentDoc] and len(filnameDirs[2]) > 2:
-			goodFileName = column=self.cpFileName+1).value = '/' + pic[self.cpParentDoc] + '/' + filnameDirs[2]
-			print ('Line ', self.lines, ', Fixing :',  filnameDirs[1], ' ### Good file name is :', goodFileName)
-            		self.wp.cell(row=self.lines), column=self.cpFileName+1).value = goodFileName
+            if pic[self.cpDescription] is not None and pic[self.cpFileName] is not None:
+                filnameDir = pic[self.cpFileName]
+                filnameDirs = filnameDir.split("/")
+                if len(filnameDirs) > 1:
+                    #print ('Fildir: ', filnameDirs[1], ' -- PIC: ', pic[self.cpParentDoc], ' -- Fil: ', filnameDirs[2])
+                    if (filnameDirs[1] != pic[self.cpParentDoc]) and len(filnameDirs[2]) > 2:
+                        goodFileName =  '/' + str(pic[self.cpParentDoc]) + '/' + str(filnameDirs[2])
+                        #print ('Line ', self.lines, ', Fixing :',  filnameDirs[1], ' ### Good file name is :', goodFileName)
+                        self.wp.cell(row=self.lines, column=self.cpFileName+1).value = goodFileName
             if (self.lines % 100) == 0:
-                print ('Added path to ', self.lines, ' photos')
+                print ('Chacked and fixed path to ', self.lines, ' photos')
             self.lines += 1
            
            

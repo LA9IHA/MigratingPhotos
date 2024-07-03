@@ -8,14 +8,13 @@ class cols:
 
     def __init__(self):
         
-        self.testMode = True # Set to False if it is for a production run
+        self.testMode = False # Set to False if it is for a production run
         
         # Define top parent in Gallery 1.14.0. If blanks, update Album.xlsx and replace empty
         # parent album names with ZZZ and name topParent ZZZ.
         
-        self.topParent = 'ottar_egne'
+        self.topParent = 'ok18'
 
-        #self.homedir = "/Volumes/home/Oppgaver/transfer/"
         self.homedir = "/Volumes/T7Touch/gallery/transfer/"
         self.treedir = self.homedir + self.topParent + "/"
         self.subdir = self.homedir + "source/"
