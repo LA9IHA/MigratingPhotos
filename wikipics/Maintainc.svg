@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="1128 348 113 113" width="113" height="113">
+  <defs/>
+  <g id="Canvas_1" fill="none" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" stroke="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_4">
+        <title>Collections</title>
+        <path d="M 1241 427.1 L 1241 359.3 C 1241 353.085 1235.915 348 1229.7 348 L 1161.9 348 C 1155.685 348 1150.6 353.085 1150.6 359.3 L 1150.6 427.1 C 1150.6 433.315 1155.685 438.4 1161.9 438.4 L 1229.7 438.4 C 1235.915 438.4 1241 433.315 1241 427.1 Z M 1178.85 404.5 L 1190.3195 419.8115 L 1207.1 398.85 L 1229.7 427.1 L 1161.9 427.1 L 1178.85 404.5 Z M 1128 370.6 L 1128 449.7 C 1128 455.915 1133.085 461 1139.3 461 L 1218.4 461 L 1218.4 449.7 L 1139.3 449.7 L 1139.3 370.6 L 1128 370.6 Z" fill="#ff914d"/>
+      </g>
+    </g>
+  </g>
+</svg>

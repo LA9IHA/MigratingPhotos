@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="573.12594 574 105.70934 113" width="105.70934" height="113">
+  <defs/>
+  <g id="Canvas_1" fill="none" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" stroke="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Group_21">
+        <g id="Graphic_16">
+          <title>Tracé_3467</title>
+          <path d="M 573.12594 659.0018 L 573.12594 609.3657 C 573.12594 593.8544 585.6901 581.2903 601.1238 581.2903 L 666.96916 581.2903 L 675.035 585.013 L 678.8353 593.1564 L 678.8353 659.0018 C 678.8353 674.4355 666.27115 686.99964 650.8374 686.99964 L 601.1238 686.99964 C 585.6901 687.0772 573.12594 674.5131 573.12594 659.0018 Z" fill="#666"/>
+        </g>
+        <g id="Graphic_15">
+          <title>Tracé_3469</title>
+          <path d="M 659.52374 574 C 669.99386 574 678.8353 582.45365 678.8353 592.92376 C 678.8353 603.3939 669.99386 612.0026 659.52374 612.0026 C 649.0536 612.0026 612.21435 581.36786 612.9899 581.36786 C 613.7655 581.36786 591.7395 581.2903 620.1251 581.36786 C 648.51074 581.4454 647.2698 574.3102 659.52374 574 Z" fill="#666"/>
+        </g>
+        <g id="Graphic_14">
+          <title>Ellipse_69</title>
+          <circle cx="659.9115" cy="592.6135" r="6.66985917279875" fill="white"/>
+        </g>
+        <g id="Graphic_13">
+          <title>Ellipse_67</title>
+          <circle cx="626.0194" cy="634.18375" r="31.3328268117519" fill="white"/>
+        </g>
+        <g id="Graphic_12">
+          <title>Ellipse_68</title>
+          <circle cx="626.0194" cy="634.18375" r="22.181159574656" fill="#3c3c3c"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="260 574 125 113" width="125" height="113">
+  <defs/>
+  <g id="Canvas_1" fill="none" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" stroke="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_19">
+        <title>latop Windows</title>
+        <path d="M 364.16667 673.7059 L 364.16667 667.0588 C 369.89583 667.0588 374.53125 661.0765 374.53125 653.7647 L 374.58333 587.2941 C 374.58333 579.98235 369.89583 574 364.16667 574 L 280.83333 574 C 275.10417 574 270.41667 579.98235 270.41667 587.2941 L 270.41667 653.7647 C 270.41667 661.0765 275.10417 667.0588 280.83333 667.0588 L 280.83333 673.7059 L 260 673.7059 L 260 687 L 385 687 L 385 673.7059 L 364.16667 673.7059 Z M 280.83333 587.2941 L 364.16667 587.2941 L 364.16667 653.7647 L 280.83333 653.7647 L 280.83333 587.2941 Z" fill="#666"/>
+      </g>
+    </g>
+  </g>
+</svg>

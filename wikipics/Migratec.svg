@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="867 348 120 113" width="120" height="113">
+  <defs/>
+  <g id="Canvas_1" fill="none" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" stroke="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_3">
+        <title>Wallet Travel</title>
+        <path d="M 975 371.78947 L 957 371.78947 L 957 359.89474 C 957 353.29316 951.66 348 945 348 L 909 348 C 902.34 348 897 353.29316 897 359.89474 L 897 371.78947 L 879 371.78947 C 872.34 371.78947 867 377.08263 867 383.6842 L 867 449.10526 C 867 455.70684 872.34 461 879 461 L 975 461 C 981.66 461 987 455.70684 987 449.10526 L 987 383.6842 C 987 377.08263 981.66 371.78947 975 371.78947 Z M 909 359.89474 L 945 359.89474 L 945 371.78947 L 909 371.78947 L 909 359.89474 Z M 975 449.10526 L 879 449.10526 L 879 437.21053 L 975 437.21053 L 975 449.10526 Z M 975 419.3684 L 879 419.3684 L 879 383.6842 L 897 383.6842 L 897 395.57895 L 909 395.57895 L 909 383.6842 L 945 383.6842 L 945 395.57895 L 957 395.57895 L 957 383.6842 L 975 383.6842 L 975 419.3684 Z" fill="#ff914d"/>
+      </g>
+    </g>
+  </g>
+</svg>
